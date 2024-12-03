@@ -17,3 +17,4 @@ LocalScripts/Python/NNTrainer/old_models
 !LocalScripts/Python/NNTrainer/
 !LocalScripts/Python/NNTrainer/**/*.txt
 !LocalScripts/Python/NNTrainer/**/*.png
+!Corrections/SFfromPOG/*txt
