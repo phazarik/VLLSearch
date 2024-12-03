@@ -1,0 +1,85 @@
+
+Processing /home/work/phazarik1/work/VLLSearch/CondorSetup/runana.C("/home/work/phazarik1/work/VLLSearch/AnaScript/HistMaker","/home/work/alaha1/public/RunII_ULSamples/2018/DYJetsToLL/M50/VLL_DYJetsToLL_M50_98.root","demo_test.root","0","2018_UL","dy","DYJetsToLL_M50")...
+Year set to: 2018
+json file loaded.
+ScaleFactors loaded: muon (ID)
+ScaleFactors loaded: muon (Iso)
+ScaleFactors loaded: electron (ID)
+ScaleFactors loaded: jet (JEC)
+ScaleFactors loaded: jet (JER)
+ScaleFactors loaded: jet (pTres)
+POG efficiencies loaded (b-tagging).
+
+n-events 	 time_taken (sec)
+10000 	 3
+20000 	 5
+30000 	 7
+40000 	 9
+50000 	 11
+60000 	 13
+70000 	 16
+80000 	 18
+90000 	 20
+100000 	 22
+110000 	 24
+120000 	 26
+130000 	 28
+140000 	 30
+150000 	 32
+160000 	 34
+170000 	 36
+180000 	 38
+190000 	 40
+200000 	 42
+210000 	 44
+220000 	 46
+230000 	 48
+240000 	 50
+250000 	 52
+260000 	 54
+270000 	 56
+280000 	 58
+290000 	 60
+300000 	 62
+310000 	 65
+320000 	 67
+330000 	 69
+340000 	 71
+350000 	 73
+360000 	 75
+370000 	 77
+380000 	 79
+390000 	 81
+400000 	 83
+410000 	 85
+420000 	 87
+430000 	 89
+440000 	 91
+450000 	 93
+460000 	 95
+470000 	 97
+480000 	 99
+490000 	 101
+500000 	 103
+510000 	 106
+520000 	 108
+530000 	 110
+540000 	 112
+550000 	 114
+560000 	 116
+570000 	 118
+580000 	 120
+---------------------------------------------
+Summary:
+nEvtTotal = 580464
+nEvtRan = 580370 (99.9838 %)
+nEvtTrigger = 580370 (99.9838 %)
+nEvtPass = 311 (0.0535778 %)
+nEvtBad = 0 (0 %)
+---------------------------------------------
+
+Time taken by the programe is= 120.000000 sec 
+
+Input file  = /home/work/alaha1/public/RunII_ULSamples/2018/DYJetsToLL/M50/VLL_DYJetsToLL_M50_98.root
+Output file = demo_test.root
+

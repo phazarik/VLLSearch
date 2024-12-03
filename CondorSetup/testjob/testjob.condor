@@ -1,0 +1,11 @@
+universe = vanilla
+Requirements = (Arch == "X86_64")
+Executable = /home/work/phazarik1/work/VLLSearch/CondorSetup/testjob/testjob.sh
+should_transfer_files = YES
+Notification=never
+
+output = /home/work/phazarik1/work/VLLSearch/CondorSetup/testjob/demo_test.out
+error = /home/work/phazarik1/work/VLLSearch/CondorSetup/testjob/demo_test.err
+log = /home/work/phazarik1/work/VLLSearch/CondorSetup/testjob/demo_test.log
+arguments = /home/work/phazarik1/work/VLLSearch/AnaScript/HistMaker /home/work/alaha1/public/RunII_ULSamples/2018/DYJetsToLL/M50/VLL_DYJetsToLL_M50_98.root demo_test.root 0 2018_UL dy DYJetsToLL_M50
+queue
