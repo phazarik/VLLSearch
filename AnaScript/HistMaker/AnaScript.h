@@ -614,7 +614,7 @@ public:
     double etalow, etahigh;
     double ptlow, pthigh;
     double rholow, rhohigh;
-    int flavor;
+    int flavor; int ntrueInt;
     double sfdown, sf, sfup;
   };
   void LoadCorrectionsFromPOG();
@@ -646,6 +646,9 @@ public:
   double TrigEFF_allCampaign_Isomu24_Data(Particle muon);
   double TrigEFF_allCampaign_Ele27or32WPTightGSF_MC(Particle electron);
   double TrigEFF_allCampaign_Ele27or32WPTightGSF_Data(Particle electron);
+
+  //Pileup correction:
+  double returnPileUpWt(TString mode);
   
   //------------------------------------------------------------------------------------------------------------
   // GLOBAL VARIABLE DECLARATIONS
@@ -673,6 +676,7 @@ public:
   vector<sftxt> muonIDSF, muonIsoSF, electronIDSF; //Leptons
   vector<sftxt> jetJERSF, jetJECSF, jetPtResSF; //Jets
   vector<sftxt> bJetEffPOG; //bJet efficiencies from POG
+  vector<sftxt> pileupwtPOG;
 
   //Flags::
   bool muon_trigger, electron_trigger, overlapping_events;

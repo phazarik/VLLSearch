@@ -6,7 +6,7 @@
 | prompt (dxy, dz)| 0.05, 0.1 | 0.05 (0.1), 0.1 (0.2) in barrel (endcap) | -- |
 | ID              | `Muon_mediumId` | `Electron_cutBased`>2 (medium) | `Jet_jetId` >= 1 (2 in 2016) |
 | Isolation       | `Muon_pfRelIso03_all`<0.15 | `Electron_pfRelIso03_all`<0.15 | -- |
-|Cleaning         |--- |Cleaned from loose-e (0.4)| Cleaned from loose-L (0.4)
+|Cleaning         |--- |Cleaned from loose-mu (0.4)| Cleaned from loose-L (0.4)
 
 ### b-tagging thresholds
 |Campaign|b-tagger| Threshold|
@@ -15,6 +15,7 @@
 |2016postVFP_UL|`Jet_btagDeepFlavB`|0.3040|
 |2017_UL       |`Jet_btagDeepFlavB`|0.2598|
 |2018_UL       |`Jet_btagDeepFlavB`|0.2489|
+
 ***Source: https://btv-wiki.docs.cern.ch/ScaleFactors/***
 
 ### HLT paths used in different campaigns

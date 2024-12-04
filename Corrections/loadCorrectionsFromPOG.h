@@ -88,7 +88,7 @@ void AnaScript::LoadCorrectionsFromPOG(){
     jetPtResSF.push_back(line_ptressf);
   }
   infile_ptressf.close();
-  cout<<"ScaleFactors loaded: jet (pTres)"<<endl;
+  cout<<"ScaleFactors loaded: jet (pT-res)"<<endl;
 
   //b-tagging efficiencies (POG):
   TString bjet_eff = basedir + "bjet_mujets_and_incl_eff.txt";
@@ -103,6 +103,18 @@ void AnaScript::LoadCorrectionsFromPOG(){
   }
   infile_bjeteff.close();
   cout<<"POG efficiencies loaded (b-tagging)."<<endl;
+
+  //Pileup weights:
+  TString pileup_wt = basedir + "pileup_wt.txt";
+  ifstream infile_pileupwt(pileup_wt.Data());
+  sftxt line_pileupwt;
+  while (infile_pileupwt >> line_pileupwt.campaign
+	 >> line_pileupwt.ntrueInt
+	 >> line_pileupwt.sfdown >> line_pileupwt.sf >> line_pileupwt.sfup) {
+    pileupwtPOG.push_back(line_pileupwt);
+  }
+  infile_pileupwt.close();
+  cout<<"Pileup weights loaded."<<endl;
 }
 
 //------------------------------------------------
@@ -281,5 +293,27 @@ double AnaScript::returnbJetTaggingSFPOG(Particle jet, TString mode){
   // If no campaign matches or no range matches after the loop, return -1.0
   cout << "\033[033mError: No mathing eff (btagging), pt = " << pt << ", eta=" << eta << ", flavor = "<< flavor << ", campaign=" << _campaign <<"\033[0m"<<endl;
   return -1.0;
+}
+
+double AnaScript::returnPileUpWt(TString mode){
+  int ntrueInteractions = (int)*Pileup_nTrueInt;
+  for(const auto& entry : pileupwtPOG) {
+    bool campaign_match   = entry.campaign == _campaign;
+    int nmatch = ntrueInteractions == entry.ntrueInt;
+    if(campaign_match){
+      if(nmatch){
+        if (mode == "nom")           return entry.sf;
+        else if (mode == "systup")   return entry.sfup;
+        else if (mode == "systdown") return entry.sfdown;
+        else {
+          cout << "Error: Unknown mode: " << mode <<endl;
+          return 1.0;
+        }
+      }
+      else continue;
+    }
+  }
+  cout << "\033[033mError: Pileup weight not found for nTrueInt = " << ntrueInteractions <<"\033[0m"<<endl;
+  return 0.0;
 }
 

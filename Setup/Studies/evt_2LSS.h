@@ -84,6 +84,10 @@ void AnaScript::Make2LSSPlots(){
       //Correction to bJets:
       bjetSF = returnbJetCorrection(Jet, "nom");
 
+      //Pileup correction:
+      pileupwt = returnPileUpWt("nom");
+
+      //Combining all corrections into one event weight:
       wt = lepIdIsoSF*triggerEff*pileupwt;
       
     }
