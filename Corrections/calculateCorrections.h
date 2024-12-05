@@ -1,6 +1,7 @@
 #include "loadCorrectionsFromPOG.h"
 #include "bTaggingSF/JetEff_DeepJet_MediumWP_2016preVFP_UL.h"
 #include "bTaggingSF/JetEff_DeepJet_MediumWP_2016postVFP_UL.h"
+#include "bTaggingSF/JetEff_DeepJet_MediumWP_2017_UL.h"
 #include "bTaggingSF/JetEff_DeepJet_MediumWP_2018_UL.h"
 #include "TRandom3.h"
 

@@ -28,8 +28,8 @@ void AnaScript::Make2LSSPlots(){
   bool mm = false;
 
   //Offline cuts on the leptons:
-  float ptcut_mu  = 26; if(_campaign=="2017_UL") ptcut_mu  = 29;
-  float ptcut_ele = 35; if(_campaign=="2017_UL") ptcut_ele = 37;
+  float ptcut_mu  = 26; if(_year==2017) ptcut_mu  = 29;
+  float ptcut_ele = 35; if(_year==2017) ptcut_ele = 37; if(_year==2016) ptcut_ele = 30;
   
   if(LightLepton.size() == 2){
     if(LightLepton.at(0).charge == LightLepton.at(1).charge){

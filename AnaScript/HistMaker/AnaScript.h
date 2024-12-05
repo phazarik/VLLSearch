@@ -576,13 +576,16 @@ class AnaScript : public TSelector {
 
   //Specific studies:
   void Make2LSSPlots();
-
+  void MakebJetSFPlots();
+  
 public:
   struct Hists {
     TH1F *nevt;
     TH1F *correction[10];
     TH1F *hist[50];
     TH1F *evt2LSS[50];
+    TH1F *btagsf[5];
+    TH2F *bJets[5], *cJets[5], *lJets[5];//For bJet Eff calculation
   };
   struct Particle {
     TLorentzVector v;

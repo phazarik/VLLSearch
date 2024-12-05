@@ -29,8 +29,9 @@ samples = os.listdir(basedir)
 
 for folder in samples:
     
-    #prefix = 'hist'
-    prefix = 'normal'
+    #if not 'SingleElectron' in folder: continue
+
+    prefix = 'hst'
     if skimmed: prefix = 'skim'
     if trees:   prefix = 'tree'
 
@@ -56,8 +57,12 @@ for folder in samples:
         if old in name:
             print(f'\033[31m\nWarning! Name change: {name} -> ', end='')
             name = name.replace(old, new)
-            name = name.replace('SingleElectron', 'EGamma') #for all
             print(f'{name}\033[0m')
+
+    if 'SingleElectron' in name:
+        print(f'\033[31m\nWarning! Name change: {name} -> ', end='')
+        name = name.replace('SingleElectron', 'EGamma')
+        print(f'{name}\033[0m')
     
     outfilename = f'{prefix}_{name}.root'
     outfilepath = os.path.join(dumpdir, outfilename)

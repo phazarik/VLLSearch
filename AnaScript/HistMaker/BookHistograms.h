@@ -60,4 +60,16 @@ void AnaScript::BookHistograms(){
   h.correction[5] = new TH1F("wt_bjet", "bjet wt",    200, 0, 2);
   h.correction[6] = new TH1F("wt_evt",  "event wt",   200, 0, 2);
   for(int i=0; i<7; i++) h.correction[i]->Sumw2();
+
+  //2D plots for bTagSF calculation:
+  h.btagsf[0] = new TH1F("JetHadronFlavor_all", "JetHadronFlavor_all", 10, -2, 8);
+  std::vector<float> ptBins = {20, 30, 50, 70, 100, 140, 200, 300, 600, 1000};
+  std::vector<float> etaBins = {0.0, 0.8, 1.6, 3.0};
+  h.bJets[0] = new TH2F("bJet_PtEta", "bJet_PtEta", ptBins.size()-1, &ptBins[0], etaBins.size()-1, &etaBins[0]);
+  h.bJets[1] = new TH2F("bJet_MedWP_PtEta", "bJet_MedWP_PtEta", ptBins.size()-1, &ptBins[0],etaBins.size()-1,&etaBins[0]);
+  h.cJets[0] = new TH2F("cJet_PtEta", "cJet_PtEta", ptBins.size()-1, &ptBins[0], etaBins.size()-1, &etaBins[0]);
+  h.cJets[1] = new TH2F("cJet_Mis_PtEta", "cJet_Mis_PtEta", ptBins.size()-1, &ptBins[0], etaBins.size()-1, &etaBins[0]);
+  h.lJets[0] = new TH2F("LightJet_PtEta", "LightJet_PtEta", ptBins.size()-1, &ptBins[0], etaBins.size()-1, &etaBins[0]);
+  h.lJets[1] = new TH2F("LightJet_Mis_PtEta", "LightJet_Mis_PtEta", ptBins.size()-1, &ptBins[0], etaBins.size()-1, &etaBins[0]);
+
 }

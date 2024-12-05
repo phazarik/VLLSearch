@@ -27,8 +27,8 @@ toDebug = args.debug   ### For debugging the condor-script
 #--------------------
 
 campaign = "2017_UL"  ### Options: 2016preVFP_UL, 2016postVFP_UL, 2017_UL, 2018_UL
-mode = "skim"                ### Options: 'hist', 'skim', 'tree'
-file_type = 'normal'         ### Options:  'normal', 'skimmed'
+mode = "tree"                ### Options: 'hist', 'skim', 'tree'
+file_type = 'skimmed'         ### Options:  'normal', 'skimmed'
 
 condorsamples = ["DYJetsToLL", "ZGamma", "HTbinnedWJets", "QCD_MuEnriched", "QCD_EMEnriched", "SingleTop", "TTBar", "TTW", "TTZ", "WW", "WZ", "ZZ", "Rare", "WWZ", "WZZ", "ZZZ", "Higgs", "WpWp", "WWW", "WGamma", "VLLS_ele", "VLLS_mu", "VLLD_ele", "VLLS_tau", "VLLD_mu"]
 if '2018' not in campaign: condorsamples.extend(["SingleMuon", "SingleElectron"])
@@ -69,7 +69,7 @@ with open(jsonfile,'r') as infile: samplelist = json.load(infile)
 nanoAOD_path = None
 if file_type == 'skimmed' :
     if "2018" in campaign:          nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2LSS_2018UL_Oct15"
-    elif "2017" in campaign:        nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2LSS_2017UL_Nov01"
+    elif "2017" in campaign:        nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2017UL_baseline_Dec04"
     elif "2016preVFP"  in campaign: nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2LSS_2016preVFPUL_Nov06"
     elif "2016postVFP" in campaign: nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2LSS_2016postVFPUL_Nov07"
 else:

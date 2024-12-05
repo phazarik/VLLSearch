@@ -22,6 +22,7 @@ using namespace std;
 
 //Headers used by this particular setup:
 #include "/home/work/phazarik1/work/VLLSearch/Setup/Studies/evt_2LSS.h"
+#include "/home/work/phazarik1/work/VLLSearch/Setup/Studies/bJetScaleFactorCalculator.h"
 #include "/home/work/phazarik1/work/VLLSearch/AnaScript/HistMaker/BookHistograms.h"
 
 void AnaScript::Begin(TTree * /*tree*/)
@@ -265,7 +266,8 @@ Bool_t AnaScript::Process(Long64_t entry)
       //----------------------------------------------------------------------------------------------------------
 
 
-      Make2LSSPlots();
+      //Make2LSSPlots();
+      if(_data == 0) MakebJetSFPlots();
 
 
     }//Trigger
