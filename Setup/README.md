@@ -26,9 +26,7 @@
 |2017_UL       |`HLT_Ele35_WPTight_Gsf`|`HLT_IsoMu27`|37, 29|
 |2018_UL       |`HLT_Ele32_WPTight_Gsf`|`HLT_IsoMu24`|35, 26|
 
-The trigger efficiencies corresponding to these triggers can be found in the following links.
-- Electron triggers (Run2): [EgHLTScaleFactorMeasurements < CMS < TWiki](https://twiki.cern.ch/twiki/bin/view/CMS/EgHLTScaleFactorMeasurements)
-- Muon triggers (Run2): GitLab: https://gitlab.cern.ch/cms-muonPOG/muonefficiencies/
+The trigger efficiencies are calculated by [Kumar Yash](https://github.com/ykumar05) using tag-and-probe methods, and the details can be found in [GitHub:ykumar05/TriggerEfficiency](https://github.com/ykumar05/TriggerEfficiency). The corrections are expressed as a function of pT of the triggering object, which is extracted from a fit.
 
 ### Baseline event selections
 - Exactly two L with same sign (L = electron, muon)
