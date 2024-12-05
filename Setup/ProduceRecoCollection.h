@@ -20,7 +20,7 @@ void AnaScript::createLightLeptons(){
     temp.hovere   = -999;
     temp.r9       = -999;
     
-    bool ptetacut = temp.v.Pt()>10 && fabs(temp.v.Eta())<2.4; 
+    bool ptetacut = temp.v.Pt()>10 && fabs(temp.v.Eta())<2.4; //warning
     bool promptmuon = fabs(Muon_dxy[i])<0.05 && fabs(Muon_dz[i])<0.1;
     bool passcut_loosemuon  = ptetacut && promptmuon && Muon_looseId[i] &&  Muon_pfRelIso03_all[i]<1.00;
     bool passcut_mediummuon = ptetacut && promptmuon && Muon_mediumId[i] && Muon_pfRelIso03_all[i]<0.15; //warning
@@ -50,7 +50,7 @@ void AnaScript::createLightLeptons(){
     temp.hovere   = Electron_hoe[i];
     temp.r9       = Electron_r9[i];
 
-    bool ptetacut = temp.v.Pt()>10 && fabs(temp.v.Eta())<2.4;
+    bool ptetacut = temp.v.Pt()>10 && fabs(temp.v.Eta())<2.4; //warning
     bool cleaned_from_muons = clean_from_array(temp, LooseMuon, 0.05);
     bool isprompt = false;
     if(fabs(temp.v.Eta())<=1.479){//for barrel

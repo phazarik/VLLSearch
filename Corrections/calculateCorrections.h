@@ -16,6 +16,7 @@ double AnaScript::returnLeptonSF(Particle lepton, TString mode){
   }
   return sf;
 }
+
 //----------------------------
 // Jet resolution corrections
 //----------------------------

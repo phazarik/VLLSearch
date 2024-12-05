@@ -463,7 +463,6 @@ class AnaScript : public TSelector {
   TTreeReaderValue<Bool_t> HLT_Ele32_WPTight_Gsf = {fReader, "HLT_Ele32_WPTight_Gsf"}; //Not available in 2017
   TTreeReaderValue<Bool_t> HLT_Ele35_WPTight_Gsf = {fReader, "HLT_Ele35_WPTight_Gsf"}; //not in 2016
   */
-
   // Note on trigger paths:
   // For 2018: HLT_IsoMu24 and HLT_Ele32_WPTight_Gsf; offline_cuts: 26, 35
   // For 2017: HLT_IsoMu27 and HLT_Ele35_WPTight_Gsf; offline_cuts: 29, 37
@@ -664,6 +663,11 @@ public:
   //for skimmer
   void ReadBranch();
   void ActivateBranch(TTree *t);
+
+  //for treeMaker
+  void FillTree(TTree *tree);
+  void AddAndCompressBranch(TBranch *br);
+  void InitializeBranches(TTree *tree);
   
   //------------------------------------------------------------------------------------------------------------
   // GLOBAL VARIABLE DECLARATIONS
@@ -715,6 +719,58 @@ public:
   json jsondata;
   
   time_t start, end, buffer;
+
+  //For treemaker:
+  TTree *mytree;
+
+  //The variables to be put in the root files are global.
+  //They should be declared here.
+  UInt_t  channel;
+  UInt_t  trigger;
+  UInt_t  nlep;
+  UInt_t  njet;
+  UInt_t  nbjet;
+  Float_t lep0_pt;
+  Float_t lep0_eta;
+  Float_t lep0_phi;
+  Float_t lep0_iso;
+  Float_t lep0_sip3d;
+  Float_t lep0_mt;
+  Float_t lep1_pt;
+  Float_t lep1_eta;
+  Float_t lep1_phi;
+  Float_t lep1_iso;
+  Float_t lep1_sip3d;
+  Float_t lep1_mt;
+  Float_t dilep_pt;
+  Float_t dilep_eta;
+  Float_t dilep_phi;
+  Float_t dilep_mass;
+  Float_t dilep_mt;
+  Float_t dilep_deta;
+  Float_t dilep_dphi;
+  Float_t dilep_dR;
+  Float_t dilep_ptratio;
+  Float_t HT;
+  Float_t LT;
+  Float_t STvis;
+  Float_t ST;
+  Float_t HTMETllpt;
+  Float_t STfrac;
+  Float_t dphi_metlep0;
+  Float_t dphi_metlep1;
+  Float_t dphi_metdilep;
+  Float_t dphi_metlep_max;
+  Float_t dphi_metlep_min;
+  Float_t metpt_tree;
+  Float_t metphi_tree;
+  Float_t jec;
+  Float_t jer;
+  Double_t sf_lepIdIso;
+  Double_t sf_lepTrigEff;
+  Double_t wt_pileup;
+  Double_t sf_btagEff;
+  Double_t event_weight;
       
   ClassDef(AnaScript,0);
 
@@ -775,9 +831,14 @@ void AnaScript::Init(TTree *tree)
     }
   }
 
-  //for skimmer
-  _SkimFile = new TFile(_SkimFileName,"recreate");
-  skimTree = tree->CloneTree(0);
+  //for treemaker
+  _TreeFile = new TFile(_TreeFileName, "RECREATE");
+  _TreeFile->SetCompressionAlgorithm(2);
+  _TreeFile->SetCompressionLevel(9);
+  _TreeFile->SetCompressionSettings(209);
+  
+  mytree = new TTree("myEvents", "myEvents");
+  InitializeBranches(mytree);
   
 }
 

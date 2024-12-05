@@ -79,6 +79,8 @@ void AnaScript::Make2LSSPlots(){
 
       //Trigger efficiencies:
       double ef0 = 1.0; double ef1 = 1.0;
+      ef0 = GetLeptonTriggerEfficiency(LightLepton.at(0));
+      ef1 = GetLeptonTriggerEfficiency(LightLepton.at(1));
       triggerEff = 1-((1-ef0)*(1-ef1));
 
       //Correction to bJets:

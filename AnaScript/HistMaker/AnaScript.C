@@ -18,6 +18,7 @@ using namespace std;
 
 //Corrections:
 #include "/home/work/phazarik1/work/VLLSearch/Corrections/calculateCorrections.h"
+#include "/home/work/phazarik1/work/VLLSearch/Corrections/TriggerEfficiency.h"
 
 //Headers used by this particular setup:
 #include "/home/work/phazarik1/work/VLLSearch/Setup/Studies/evt_2LSS.h"

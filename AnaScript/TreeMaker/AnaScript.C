@@ -16,8 +16,12 @@ using namespace std;
 #include "/home/work/phazarik1/work/VLLSearch/Setup/ProduceRecoCollection.h"
 #include "/home/work/phazarik1/work/VLLSearch/Setup/nlohmann/json_setup.h"
 
+//Corrections:
+#include "/home/work/phazarik1/work/VLLSearch/Corrections/calculateCorrections.h"
+#include "/home/work/phazarik1/work/VLLSearch/Corrections/TriggerEfficiency.h"
+
 //Headers used by this particular setup:
-#include "/home/work/phazarik1/work/VLLSearch/AnaScript/Skimmer/skimmerHelper.h"
+#include "/home/work/phazarik1/work/VLLSearch/AnaScript/TreeMaker/treeMakerHelper.h"
 
 void AnaScript::Begin(TTree * /*tree*/)
 {
@@ -44,9 +48,11 @@ void AnaScript::SlaveBegin(TTree *tree)
   else if(_campaign == "Summer22") _year = 2022;
   else cout<<"main: Provide correct campaign name"<<endl;
   cout<<"Year set to: "<<_year<<endl;
+  if(_flag=="doublet") cout<<"Removing invalid VLLD decay modes ..."<<endl;
 
   //Loading offline data (json, text):
   jsondata = loadJson();
+  LoadCorrectionsFromPOG();
 
   //Initializing counters:
   nEvtTotal = 0; nEvtRan = 0;  nEvtTrigger=0;
@@ -56,21 +62,15 @@ void AnaScript::SlaveBegin(TTree *tree)
   bad_event = false;
   evt_trigger = false;
 
-  //For skimmer
-  tree->SetBranchStatus("*",0);
-  ActivateBranch(tree);
-
   cout<<"\nn-events \t time_taken (sec)"<<endl;
   
 }
 
 void AnaScript::SlaveTerminate()
 {
-  //For skimmer
-  cout<<"Writing Skim File....";
-  skimTree->Write();
-  _SkimFile->Close();
-  cout<<"   Done!  "<<endl;
+  //For treeMaker:
+  mytree->Write();
+  _TreeFile->Close();
   
   float goodevtfrac = ((float)nEvtRan)/((float)nEvtTotal);
   float trigevtfrac = ((float)nEvtTrigger)/((float)nEvtTotal);
@@ -152,7 +152,9 @@ Bool_t AnaScript::Process(Long64_t entry)
 
     if(_data !=0){
 
-      // Not applying trigger while skimming. That is done while running TreeMaker.
+      //Applying trigger on data:
+      if(_flag != "egamma") triggerRes = muon_trigger; //For the SingleMuon dataset, including overlap.
+      if(_flag == "egamma") triggerRes = electron_trigger && !muon_trigger; //For the EGamma dataset
 
       //Throw awaying bad data that are not included in the GoldenJson:
       int runno = (int)*run;
@@ -243,67 +245,10 @@ Bool_t AnaScript::Process(Long64_t entry)
       SortRecoObjects();
 
       //----------------------------------------------------------------------------------------------------------
-      // Skimming
+      // Writing to tree
       //----------------------------------------------------------------------------------------------------------
 
-
-      bool keep_this_event = false;
-      
-      //-----------
-      //2LSS skim:
-      //----------
-      if((int)LightLepton.size()==2){
-	//Condition 1: SS
-	bool samesign = LightLepton.at(0).charge == LightLepton.at(1).charge;
-	//Condition 2: finding a triggerable object
-	bool trigger = false;
-	for(int i=0; i<(int)LightLepton.size(); i++){
-	  int lepton_id = fabs(LightLepton.at(i).id);
-	  float lepton_pt = LightLepton.at(i).v.Pt();
-	  if(lepton_id == 11 && lepton_pt > 37) trigger = true;
-	  if(lepton_id == 13 && lepton_pt > 29) trigger = true;
-	}
-	//Condition 3: low-res veto
-	bool reject_low_resonances = (LightLepton.at(0).v + LightLepton.at(1).v).M() > 15;
-	
-	if(trigger && reject_low_resonances && samesign) keep_this_event = true;
-      }
-
-      //--------------
-      // For Shalini
-      //--------------
-      
-      /*
-      if((int)LooseLepton.size()>=2){
-	
-	// 1) Object selection:
-	//Loose muons/electron, pT>15, abs(eta)<2.4
-	//Muon_looseID or Electron_cutBased[i]>1
-	//prompt, reliso03 < 1.0;
-	
-        // 2) dilepton mass requirement:
-	float dilep_mass = (LooseLepton.at(0).v + LooseLepton.at(1).v).M();
-	bool reject_low_mass = dilep_mass > 50;
-
-	
-	bool trigger = false;
-	for(int i=0; i<(int)LooseLepton.size(); i++){
-	  int lepton_id = fabs(LooseLepton.at(i).id);
-	  float lepton_pt = LooseLepton.at(i).v.Pt();
-	  if(lepton_id == 11 && lepton_pt > 35) trigger = true;
-	  if(lepton_id == 13 && lepton_pt > 26) trigger = true;
-	  }
-	
-	if(reject_low_mass) keep_this_event = true;
-	
-      }*/
-      
-      if(bad_event) keep_this_event = false;
-      
-      if(keep_this_event){
-	nEvtPass++;
-	skimTree->Fill();
-      }
+      FillTree(mytree);
       
       
     }//Trigger

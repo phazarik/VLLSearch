@@ -99,7 +99,7 @@ for rootfile in files:
     filecount+=1
 
     infilepath  = os.path.join(args.indir, rootfile)
-    outfilename = prefix+'_'+args.sample+'_'+args.subsample+'.root'
+    outfilename = prefix+'_'+args.sample+'_'+args.subsample+"_"+str(filecount)+'.root'
     outfilepath = os.path.join(outdir, outfilename)
     arguments = f'{codedir} {infilepath} {outfilepath} {args.data} {args.campaign} {args.flag} {fullsample}'
 
@@ -110,9 +110,9 @@ for rootfile in files:
         print('Arguments = '+arguments)
 
     info_for_each_file = [
-        "output = "+logdir+"//$(Cluster)_log_"+output_tag+".out",
-        "error = " +logdir+"//$(Cluster)_log_"+output_tag+".err",
-        "log = "   +logdir+"//$(Cluster)_log_"+output_tag+".log",
+        "output = "+logdir+"//$(Cluster)_log_"+output_tag+"_"+str(filecount)+".out",
+        "error = " +logdir+"//$(Cluster)_log_"+output_tag+"_"+str(filecount)+".err",
+        "log = "   +logdir+"//$(Cluster)_log_"+output_tag+"_"+str(filecount)+".log",
         "arguments = "+arguments,
         "queue",
         ""

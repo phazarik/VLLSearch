@@ -40,12 +40,13 @@ void AnaScript::ReadBranch(){
   //HLT;
   *HLT_SingleMuon; //Empty pointer, used in the main header.
   *HLT_SingleEle;  //Empty pointer, used in the main header.
-  *HLT_IsoMu24; //Used in 2018
+  /* 
+   *HLT_IsoMu24; //Used in 2018
   *HLT_IsoMu27; //Used in 2017
   *HLT_Ele27_WPTight_Gsf; //Used in 2016
   *HLT_Ele32_WPTight_Gsf; //Not available in 2017
   *HLT_Ele35_WPTight_Gsf; //Used in 2018, not in 2016
-  
+  */
   //Flags
   *Flag_HBHENoiseFilter;
   *Flag_HBHENoiseIsoFilter;

@@ -26,8 +26,8 @@ toDebug = args.debug   ### For debugging the condor-script
 # Global settings
 #--------------------
 
-campaign = "2018_UL"  ### Options: 2016preVFP_UL, 2016postVFP_UL, 2017_UL, 2018_UL
-mode = "hist"                ### Options: 'hist', 'skim', 'tree'
+campaign = "2017_UL"  ### Options: 2016preVFP_UL, 2016postVFP_UL, 2017_UL, 2018_UL
+mode = "skim"                ### Options: 'hist', 'skim', 'tree'
 file_type = 'normal'         ### Options:  'normal', 'skimmed'
 
 condorsamples = ["DYJetsToLL", "ZGamma", "HTbinnedWJets", "QCD_MuEnriched", "QCD_EMEnriched", "SingleTop", "TTBar", "TTW", "TTZ", "WW", "WZ", "ZZ", "Rare", "WWZ", "WZZ", "ZZZ", "Higgs", "WpWp", "WWW", "WGamma", "VLLS_ele", "VLLS_mu", "VLLD_ele", "VLLS_tau", "VLLD_mu"]
