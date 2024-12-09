@@ -12,9 +12,9 @@
 CondorSetup/previous_jobs/
 *.ipynb_checkpoints
 *backup.h
-LocalScripts/Python/NNTrainer/old_models
+LocalScripts/NNTrainer/old_models
 
-!LocalScripts/Python/NNTrainer/
-!LocalScripts/Python/NNTrainer/**/*.txt
-!LocalScripts/Python/NNTrainer/**/*.png
+!LocalScripts/NNTrainer/
+!LocalScripts/NNTrainer/**/*.txt
+!LocalScripts/NNTrainer/**/*.png
 !Corrections/SFfromPOG/*txt
