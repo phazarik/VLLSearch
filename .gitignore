@@ -15,6 +15,7 @@ CondorSetup/previous_jobs/
 LocalScripts/NNTrainer/old_models
 
 !LocalScripts/NNTrainer/
-!LocalScripts/NNTrainer/**/*.txt
-!LocalScripts/NNTrainer/**/*.png
+!LocalScripts/NNTrainer/*/*.txt
+!LocalScripts/NNTrainer/*/*.png
 !Corrections/SFfromPOG/*txt
+!Corrections/plots/*/*.png
