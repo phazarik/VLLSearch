@@ -183,10 +183,16 @@ double AnaScript::TrigEFF_allCampaign_Ele27or32WPTightGSF_Data(Particle electron
     else if(fabs(eta)>1.479)  eff = 0.5*0.962208*(1.0+TMath::Erf((pt-33.9927)/(2.0*1.55814)));
     return eff;
   }
+  /*
   else if(_campaign == "2018_UL"){ 
     if(eta<=1.479)     eff = 0.5*0.950463*(1.0+TMath::Erf((pt-23.9593)/(2.0*0.375996)));
     else if(eta>1.479) eff = 0.5*0.953162*(1.0+TMath::Erf((pt-23.9459)/(2.0*0.457351)));
     return eff; //Taken from Yash on 05-06-2024 //HLT_Ele32_WPTight_Gsf
+    }*/
+  else if(_campaign == "2018_UL"){ 
+    if(eta<=1.479)     eff = 0.5*0.962897*(1.0+TMath::Erf((pt-33.1188)/(2.0*0.844886)));
+    else if(eta>1.479) eff = 0.5*0.975043*(1.0+TMath::Erf((pt-32.9805)/(2.0*1.18094)));
+    return eff;
   }
   else{
     cout<<"Warning: Give proper campaign name."<<endl;
