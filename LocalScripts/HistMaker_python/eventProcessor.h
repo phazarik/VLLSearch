@@ -1,24 +1,23 @@
-//--------------------------------------------------------------
-// This script takes a ROOT file containing custom made tree
-// with event level branches, and produces histograms.
-//--------------------------------------------------------------
+#ifndef EVENTPROCESSOR_H
+#define EVENTPROCESSOR_H
 
 #include <TFile.h>
 #include <TTree.h>
 #include <TH1F.h>
 #include <iostream>
 #include <vector>
+#include <string>
 #include "setBranchesAndHistograms.h"
 using namespace std;
 
-Long64_t channel, trigger, nlep, njet, nbjet;
-Double_t lep0_pt, lep0_eta, lep0_phi, lep0_iso, lep0_sip3d, lep0_mt;
-Double_t lep1_pt, lep1_eta, lep1_phi, lep1_iso, lep1_sip3d, lep1_mt;
-Double_t dilep_pt, dilep_eta, dilep_phi, dilep_mass, dilep_mt, dilep_deta, dilep_dphi, dilep_dR, dilep_ptratio;
-Double_t HT, LT, STvis, ST, HTMETllpt, STfrac, metpt, metphi;
-Double_t dphi_metlep0, dphi_metlep1, dphi_metdilep, dphi_metlep_max, dphi_metlep_min;
-Double_t nnscore1, nnscore2, nnscore3, nnscore4;
-Double_t wt_leptonSF, wt_trig, wt_pileup, wt_bjet, weight;
+extern Long64_t channel, trigger, nlep, njet, nbjet;
+extern Double_t lep0_pt, lep0_eta, lep0_phi, lep0_iso, lep0_sip3d, lep0_mt;
+extern Double_t lep1_pt, lep1_eta, lep1_phi, lep1_iso, lep1_sip3d, lep1_mt;
+extern Double_t dilep_pt, dilep_eta, dilep_phi, dilep_mass, dilep_mt, dilep_deta, dilep_dphi, dilep_dR, dilep_ptratio;
+extern Double_t HT, LT, STvis, ST, HTMETllpt, STfrac, metpt, metphi;
+extern Double_t dphi_metlep0, dphi_metlep1, dphi_metdilep, dphi_metlep_max, dphi_metlep_min;
+extern Double_t wt_leptonSF, wt_trig, wt_pileup, wt_bjet, weight;
+extern Double_t nnscore1, nnscore2, nnscore3, nnscore4;
 
 struct hists{
   TString name;
@@ -29,13 +28,13 @@ struct hists{
   std::vector<float> binning;  // For custom binning
 };
 
-//External functions:
-void setBranches(TTree *tree);
-//void bookHistograms();
-void SetLastBinAsOverflow(TH1F *hst);
+//________________________________________________________________________________________________________________
+//
+// Process one file:
+//________________________________________________________________________________________________________________
 
-//Main macro:
-void processTree_simpler(
+
+void processTree(
 		 const char* inputFilename,
 		 const char* outputFilename,
 		 const char* campaign,
@@ -45,14 +44,14 @@ void processTree_simpler(
   // Opening the ROOT file
   TFile *file = TFile::Open(inputFilename);
   if (!file || file->IsZombie()) {
-    std::cerr << "Error opening file: " << inputFilename << std::endl;
+    cerr << "Error opening file: " << inputFilename << endl;
     return;
   }
 
   // Getting the TTree
   TTree *tree = (TTree*)file->Get("myEvents");
   if (!tree) {
-    std::cerr << "Error getting TTree from file: " << inputFilename << std::endl;
+    cerr << "Error getting TTree from file: " << inputFilename << endl;
     file->Close();
     return;
   }
@@ -132,10 +131,10 @@ void processTree_simpler(
   cout<<"hst_collection size = "<<(int)hst_collection.size()<<"\033[0m"<<endl;
 
   //Flagging specific samples:
-  std::string filename(inputFilename);
-  std::string baseFilename = filename.substr(filename.find_last_of("/\\") + 1);
-  bool correctDY    = baseFilename.find("DYJetsToLL") != std::string::npos;
-  bool correctTTBar = baseFilename.find("TTBar") != std::string::npos;
+  string filename(inputFilename);
+  string baseFilename = filename.substr(filename.find_last_of("/\\") + 1);
+  bool correctDY    = baseFilename.find("DYJetsToLL") != string::npos;
+  bool correctTTBar = baseFilename.find("TTBar") != string::npos;
   if(correctDY)    cout<<"Correcting DY events in HT bins (ee)"<<endl;
   if(correctTTBar) cout<<"Correcting TTBar events in LT bins (all channels)"<<endl;
 
@@ -161,7 +160,7 @@ void processTree_simpler(
     //--------------------------------
 
     //wt = wt*wt_leptonSF*wt_trig; //Object corrections
-    //wt = wt*wt_bjet;                       //Adding b-tagging corrections
+    //wt = wt*wt_bjet;             //Adding b-tagging corrections
 
     event_selection = channel_selection;
     
@@ -246,5 +245,7 @@ void processTree_simpler(
   outputFile->Close();
   file->Close();
 
-  std::cout << "Histograms have been saved to " << outputFilename << std::endl;
+  cout << "Histograms have been saved to " << outputFilename << endl;
 }
+
+#endif //EVENTPROCESSOR_H

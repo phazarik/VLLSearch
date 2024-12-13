@@ -91,6 +91,12 @@ void SetLastBinAsOverflow(TH1F *hst){
   double updated_error_first = std::sqrt(error_first*error_first + underflow_err*underflow_err);
   hst->SetBinContent(1, updated_content_first);
   hst->SetBinError(1, updated_error_first);
+
+  // Resetting underflow and overflow bins to avoid multiple calling of this function.
+  hst->SetBinContent(lastBin + 1, 0);
+  hst->SetBinError(lastBin + 1, 0);
+  hst->SetBinContent(0, 0);
+  hst->SetBinError(0, 0);
   
 }
 
