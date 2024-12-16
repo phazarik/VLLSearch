@@ -15,6 +15,7 @@ void AnaScript::ActivateBranch(TTree *t){
   for(auto activeBranchName : {"HLT_IsoMu20","HLT_IsoMu24","HLT_IsoMu27","HLT_Ele32_WPTight_Gsf","HLT_Ele27_WPTight_Gsf"})
   t->SetBranchStatus(activeBranchName, 1);*/
   for(auto activeBranchName : {"HLT_IsoMu*", "HLT_Ele*"}) t->SetBranchStatus(activeBranchName, 1);
+  //for(auto activeBranchName : {"HLT*"}) t->SetBranchStatus(activeBranchName, 1);
   
   if(_data==0){
     for(auto activeBranchName : {"nGenPart","GenPart_*","nGenJet","GenJet_*","nGenVisTau","GenVisTau_*","GenMET_phi","GenMET_pt", "Pileup*"})  //"*LHE*Weight*" is not avaiable in QCD multijet backgrounds.
@@ -42,11 +43,60 @@ void AnaScript::ReadBranch(){
   *HLT_SingleEle;  //Empty pointer, used in the main header.
   /* 
    *HLT_IsoMu24; //Used in 2018
-  *HLT_IsoMu27; //Used in 2017
-  *HLT_Ele27_WPTight_Gsf; //Used in 2016
-  *HLT_Ele32_WPTight_Gsf; //Not available in 2017
-  *HLT_Ele35_WPTight_Gsf; //Used in 2018, not in 2016
+   *HLT_IsoMu27; //Used in 2017
+   *HLT_Ele27_WPTight_Gsf; //Used in 2016
+   *HLT_Ele32_WPTight_Gsf; //Not available in 2017
+   *HLT_Ele35_WPTight_Gsf; //Used in 2018, not in 2016
+   */
+
+  /*
+  //For Shalini:
+  *HLT_DoubleEle24_eta2p1_WPTight_Gsf;
+  *HLT_DoubleEle25_CaloIdL_MW;
+  *HLT_DoubleEle27_CaloIdL_MW;
+  *HLT_DoubleEle33_CaloIdL_MW;
+  *HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_DZ_PFHT350;
+  *HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT350;
+  *HLT_Ele115_CaloIdVT_GsfTrkIdT;
+  *HLT_Ele135_CaloIdVT_GsfTrkIdT;
+  *HLT_Ele145_CaloIdVT_GsfTrkIdT;
+  *HLT_Ele15_Ele8_CaloIdL_TrackIdL_IsoVL;
+  *HLT_Ele15_IsoVVVL_PFHT450;
+  *HLT_Ele15_IsoVVVL_PFHT450_PFMET50;
+  *HLT_Ele15_IsoVVVL_PFHT600;
+  *HLT_Ele15_WPLoose_Gsf;
+  *HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL;
+  *HLT_Ele17_CaloIdM_TrackIdM_PFJet30;
+  *HLT_Ele17_WPLoose_Gsf;
+  *HLT_Ele200_CaloIdVT_GsfTrkIdT;
+  *HLT_Ele20_WPLoose_Gsf;
+  *HLT_Ele20_WPTight_Gsf;
+  *HLT_Ele20_eta2p1_WPLoose_Gsf;
+  *HLT_Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30;
+  *HLT_Ele23_CaloIdM_TrackIdM_PFJet30;
+  *HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL;
+  *HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ;
+  *HLT_Ele27_Ele37_CaloIdL_MW;
+  *HLT_Ele27_WPTight_Gsf;
+  *HLT_Ele28_HighEta_SC20_Mass55;
+  *HLT_Ele28_eta2p1_WPTight_Gsf_HT150;
+  *HLT_Ele300_CaloIdVT_GsfTrkIdT;
+  *HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned;
+  *HLT_Ele32_WPTight_Gsf;
+  *HLT_Ele32_WPTight_Gsf_L1DoubleEG;
+  *HLT_Ele35_WPTight_Gsf;
+  *HLT_Ele35_WPTight_Gsf_L1EGMT;
+  *HLT_Ele38_WPTight_Gsf;
+  *HLT_Ele40_WPTight_Gsf;
+  *HLT_IsoMu24;
+  *HLT_IsoMu24_eta2p1;
+  *HLT_IsoMu27_MET90;
+  *HLT_Mu23_Mu12;
+  *HLT_Mu23_Mu12_DZ;
+  *HLT_Mu23_Mu12_SameSign;
+  *HLT_IsoMu24_eta2p1;
   */
+
   //Flags
   *Flag_HBHENoiseFilter;
   *Flag_HBHENoiseIsoFilter;
@@ -124,16 +174,16 @@ void AnaScript::ReadBranch(){
     *Pileup_nPU;
     *Pileup_sumEOOT;
     *Pileup_sumLOOT;
-    *Pileup_nTrueInt;
+    *Pileup_nTrueInt; //important for pileup correction
     *Pileup_gpudensity;
 
     if(_flag != "qcd"){
       **ptr_LHEWeight_originalXWGTUP;
-      **ptr_nLHEPdfWeight;
+      **ptr_nLHEPdfWeight;         //iterator
+      **ptr_nLHEReweightingWeight; //iterator
+      **ptr_nLHEScaleWeight;       //iterator
       for(unsigned int i=0; i<(unsigned int)**ptr_nLHEPdfWeight; i++)          (*ptr_LHEPdfWeight)[i];
-      **ptr_nLHEReweightingWeight;
       for(unsigned int i=0; i<(unsigned int)**ptr_nLHEReweightingWeight; i++ ) (*ptr_LHEReweightingWeight)[i];
-      **ptr_nLHEScaleWeight;
       for(unsigned int i=0; i<(unsigned int)**ptr_nLHEScaleWeight; i++ )       (*ptr_LHEScaleWeight)[i];
     }
     

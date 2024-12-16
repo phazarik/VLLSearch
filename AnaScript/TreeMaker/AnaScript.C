@@ -186,12 +186,12 @@ Bool_t AnaScript::Process(Long64_t entry)
 
       if(_data==0){
 	createGenLightLeptons();
-	//createGenJets();
+	createGenJets();
         SortGenObjects();
-	//SortPt(genMuon);
-	//SortPt(genElectron);
-	//SortPt(genLightLepton);
-	//createSignalArrays();
+	SortPt(genMuon);
+	SortPt(genElectron);
+	SortPt(genLightLepton);
+	createSignalArrays();
 	SortVLL();
 
 	//Correcting the Doublet model (flagging out the invalid decays)

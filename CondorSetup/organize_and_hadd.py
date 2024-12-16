@@ -41,7 +41,8 @@ for folder in samples:
     corrections = {
         'M10To50':'M10to50',
         'Inclusice':'Inclusive',
-        'WZTo2L2Q':'WZTo2Q2L',
+        #'WZTo2L2Q':'WZTo2Q2L',
+        'WZTo2Q2L':'WZTo2L2Q',
         'TTWToLnu':'TTWToLNu',
         'SingleElectronBpreVFP_ver2':'SingleElectron_B',
         'SingleElectronCpreVFP':'SingleElectron_C',

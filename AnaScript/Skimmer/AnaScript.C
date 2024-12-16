@@ -106,7 +106,6 @@ void AnaScript::Terminate()
 Bool_t AnaScript::Process(Long64_t entry)
 {
   nEvtTotal++;
-  
   //------------------------------------------------------
   //Initializing fReaders:
   fReader.SetLocalEntry(entry);
@@ -114,13 +113,17 @@ Bool_t AnaScript::Process(Long64_t entry)
   else       fReader_Run2.SetLocalEntry(entry);
   if(_data == 0){
     fReader_MC.SetLocalEntry(entry);
-    if(!_run3) {
+    if(!_run3){
       fReader_Run2_MC.SetLocalEntry(entry);
       if(_flag != "qcd") fReader_Run2_MC_nonQCD.SetLocalEntry(entry);
     }
-    else       fReader_Run3_MC.SetLocalEntry(entry);
+    else {
+      fReader_Run3_MC.SetLocalEntry(entry);
+    }
   } 
-  //------------------------------------------------------
+  //-------------------------------------------------------
+
+  ReadBranch(); //for skimmer
 
   //Setting verbosity:
   time(&buffer);
@@ -184,12 +187,12 @@ Bool_t AnaScript::Process(Long64_t entry)
 
       if(_data==0){
 	createGenLightLeptons();
-	//createGenJets();
+	createGenJets();
         SortGenObjects();
-	//SortPt(genMuon);
-	//SortPt(genElectron);
-	//SortPt(genLightLepton);
-	//createSignalArrays();
+	SortPt(genMuon);
+	SortPt(genElectron);
+	SortPt(genLightLepton);
+	createSignalArrays();
 	SortVLL();
 
 	//Correcting the Doublet model (flagging out the invalid decays)
@@ -246,12 +249,35 @@ Bool_t AnaScript::Process(Long64_t entry)
       // Skimming
       //----------------------------------------------------------------------------------------------------------
 
+      /*
+      //Forcing TTreeReader to read some of the MC branches:
+      if(_data==0){
+	float Pileup_nTrueInt = (float)Pileup_nTrueInt;
+	float LHEwt=0; float LHEreweight=0; float LHEscaleweight=0;
+	if(_flag!="qcd"){
+	for(unsigned int i=0; i<(unsigned int)**ptr_nLHEPdfWeight; i++)
+	  LHEwt          = (float)(*ptr_LHEPdfWeight)[i];
+	for(unsigned int i=0; i<(unsigned int)**ptr_nLHEReweightingWeight; i++ )
+	  LHEreweight    = (float)(*ptr_LHEReweightingWeight)[i];
+	for(unsigned int i=0; i<(unsigned int)**ptr_nLHEScaleWeight; i++ )
+	  LHEscaleweight = (float)(*ptr_LHEScaleWeight)[i];
+	}
+	if(*Pileup_nTrueInt > 0){
+	  cout<<"Forcing TTreeReader to read some MC branches"<<"\t";
+	  cout<<*Pileup_nTrueInt<<endl;
+	  //cout<<LHEwt<<"\t"<<LHEreweight<<"\t"<<LHEscaleweight<<endl;
+	}
+	}*/
+
 
       bool keep_this_event = false;
       
       //-----------
       //2LSS skim:
       //----------
+      float ptcut_mu  = 26; if(_year==2017) ptcut_mu  = 29;
+      float ptcut_ele = 35; if(_year==2017) ptcut_ele = 37; if(_year==2016) ptcut_ele = 30;
+
       if((int)LightLepton.size()==2){
 	//Condition 1: SS
 	bool samesign = LightLepton.at(0).charge == LightLepton.at(1).charge;
@@ -260,8 +286,8 @@ Bool_t AnaScript::Process(Long64_t entry)
 	for(int i=0; i<(int)LightLepton.size(); i++){
 	  int lepton_id = fabs(LightLepton.at(i).id);
 	  float lepton_pt = LightLepton.at(i).v.Pt();
-	  if(lepton_id == 11 && lepton_pt > 37) trigger = true;
-	  if(lepton_id == 13 && lepton_pt > 29) trigger = true;
+	  if(lepton_id == 11 && lepton_pt > ptcut_ele) trigger = true;
+	  if(lepton_id == 13 && lepton_pt > ptcut_mu)  trigger = true;
 	}
 	//Condition 3: low-res veto
 	bool reject_low_resonances = (LightLepton.at(0).v + LightLepton.at(1).v).M() > 15;
@@ -285,18 +311,17 @@ Bool_t AnaScript::Process(Long64_t entry)
 	float dilep_mass = (LooseLepton.at(0).v + LooseLepton.at(1).v).M();
 	bool reject_low_mass = dilep_mass > 50;
 
-	
 	bool trigger = false;
 	for(int i=0; i<(int)LooseLepton.size(); i++){
 	  int lepton_id = fabs(LooseLepton.at(i).id);
 	  float lepton_pt = LooseLepton.at(i).v.Pt();
 	  if(lepton_id == 11 && lepton_pt > 35) trigger = true;
 	  if(lepton_id == 13 && lepton_pt > 26) trigger = true;
-	  }
+	}
 	
 	if(reject_low_mass) keep_this_event = true;
 	
-      }*/
+	}*/
       
       if(bad_event) keep_this_event = false;
       

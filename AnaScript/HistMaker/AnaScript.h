@@ -722,13 +722,18 @@ void AnaScript::Init(TTree *tree)
 
   _run3 = false; if(_campaign == "Summer22") _run3 = true;
   
-  fReader.SetTree(tree);
+  //Setting up the fReaders:
+  fReader                .SetTree(tree);
   if(_run3)  fReader_Run3.SetTree(tree);
   else       fReader_Run2.SetTree(tree);
-  if(_data == 0){//If the input file is MC, activate fReader_MC 
-    fReader_MC                .SetTree(tree);
-    if(!_run3) fReader_Run2_MC.SetTree(tree);
-    else       fReader_Run3_MC.SetTree(tree);
+  
+  if(_data == 0){              //If the input file is MC, activate fReader_MC 
+    fReader_MC.SetTree(tree);
+    if(!_run3) {
+      fReader_Run2_MC.SetTree(tree);
+      if(_flag != "qcd") fReader_Run2_MC_nonQCD.SetTree(tree);
+    }
+    else fReader_Run3_MC.SetTree(tree);
   }
   
   // Assigning address to the pointers for variables that have different names in Run2 and Run3.

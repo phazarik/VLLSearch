@@ -377,7 +377,7 @@ class AnaScript : public TSelector {
   //TTreeReaderArray<Int_t>   GenPart_statusFlags =      {fReader_MC, "GenPart_statusFlags"};
 
   //GenVisTau
-  TTreeReaderValue<iterator> nGenVisTau =                 {fReader_MC, "nGenVisTau"};
+  TTreeReaderValue<iterator> nGenVisTau =                {fReader_MC, "nGenVisTau"};
   TTreeReaderArray<Float_t> GenVisTau_eta =              {fReader_MC, "GenVisTau_eta"};
   TTreeReaderArray<Float_t> GenVisTau_mass =             {fReader_MC, "GenVisTau_mass"};
   TTreeReaderArray<Float_t> GenVisTau_phi =              {fReader_MC, "GenVisTau_phi"};
@@ -448,12 +448,12 @@ class AnaScript : public TSelector {
   //TTreeReaderValue<Bool_t> HLT_SingleEle  = {fReader, "HLT_Ele27_WPTight_Gsf"};
 
   //For 2017:
-  TTreeReaderValue<Bool_t> HLT_SingleMuon = {fReader, "HLT_IsoMu27"};
-  TTreeReaderValue<Bool_t> HLT_SingleEle  = {fReader, "HLT_Ele35_WPTight_Gsf"};
+  //TTreeReaderValue<Bool_t> HLT_SingleMuon = {fReader, "HLT_IsoMu27"};
+  //TTreeReaderValue<Bool_t> HLT_SingleEle  = {fReader, "HLT_Ele35_WPTight_Gsf"};
 
   //For 2018:
-  //TTreeReaderValue<Bool_t> HLT_SingleMuon = {fReader, "HLT_IsoMu24"};
-  //TTreeReaderValue<Bool_t> HLT_SingleEle  = {fReader, "HLT_Ele32_WPTight_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_SingleMuon = {fReader, "HLT_IsoMu24"};
+  TTreeReaderValue<Bool_t> HLT_SingleEle  = {fReader, "HLT_Ele32_WPTight_Gsf"};
 
   /*
   //Additional triggers I am keeping:
@@ -468,6 +468,51 @@ class AnaScript : public TSelector {
   // For 2018: HLT_IsoMu24 and HLT_Ele32_WPTight_Gsf; offline_cuts: 26, 35
   // For 2017: HLT_IsoMu27 and HLT_Ele35_WPTight_Gsf; offline_cuts: 29, 37
   // For 2016: HLT_IsoMu24 and HLT_Ele27_WPTight_Gsf; offline_cuts: 26, 30
+
+  /*
+  TTreeReaderValue<Bool_t> HLT_DoubleEle25_CaloIdL_MW = {fReader, "HLT_DoubleEle25_CaloIdL_MW"};
+  TTreeReaderValue<Bool_t> HLT_DoubleEle27_CaloIdL_MW = {fReader, "HLT_DoubleEle27_CaloIdL_MW"};
+  TTreeReaderValue<Bool_t> HLT_DoubleEle33_CaloIdL_MW = {fReader, "HLT_DoubleEle33_CaloIdL_MW"};
+  TTreeReaderValue<Bool_t> HLT_DoubleEle24_eta2p1_WPTight_Gsf = {fReader, "HLT_DoubleEle24_eta2p1_WPTight_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_DZ_PFHT350 = {fReader, "HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_DZ_PFHT350"};
+  TTreeReaderValue<Bool_t> HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT350 = {fReader, "HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT350"};
+  TTreeReaderValue<Bool_t> HLT_Ele27_Ele37_CaloIdL_MW = {fReader, "HLT_Ele27_Ele37_CaloIdL_MW"};
+  TTreeReaderValue<Bool_t> HLT_Ele20_WPTight_Gsf = {fReader, "HLT_Ele20_WPTight_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_Ele15_WPLoose_Gsf = {fReader, "HLT_Ele15_WPLoose_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_Ele17_WPLoose_Gsf = {fReader, "HLT_Ele17_WPLoose_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_Ele20_WPLoose_Gsf = {fReader, "HLT_Ele20_WPLoose_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_Ele20_eta2p1_WPLoose_Gsf = {fReader, "HLT_Ele20_eta2p1_WPLoose_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_Ele27_WPTight_Gsf = {fReader, "HLT_Ele27_WPTight_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_Ele32_WPTight_Gsf = {fReader, "HLT_Ele32_WPTight_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_Ele35_WPTight_Gsf = {fReader, "HLT_Ele35_WPTight_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_Ele35_WPTight_Gsf_L1EGMT = {fReader, "HLT_Ele35_WPTight_Gsf_L1EGMT"};
+  TTreeReaderValue<Bool_t> HLT_Ele38_WPTight_Gsf = {fReader, "HLT_Ele38_WPTight_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_Ele40_WPTight_Gsf = {fReader, "HLT_Ele40_WPTight_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_Ele32_WPTight_Gsf_L1DoubleEG = {fReader, "HLT_Ele32_WPTight_Gsf_L1DoubleEG"};
+  TTreeReaderValue<Bool_t> HLT_IsoMu24 = {fReader, "HLT_IsoMu24"};
+  TTreeReaderValue<Bool_t> HLT_IsoMu24_eta2p1 = {fReader, "HLT_IsoMu24_eta2p1"};
+  TTreeReaderValue<Bool_t> HLT_Ele15_Ele8_CaloIdL_TrackIdL_IsoVL = {fReader, "HLT_Ele15_Ele8_CaloIdL_TrackIdL_IsoVL"};
+  TTreeReaderValue<Bool_t> HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ = {fReader, "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"};
+  TTreeReaderValue<Bool_t> HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL = {fReader, "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL"};
+  TTreeReaderValue<Bool_t> HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned = {fReader, "HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned"};
+  TTreeReaderValue<Bool_t> HLT_Ele28_eta2p1_WPTight_Gsf_HT150 = {fReader, "HLT_Ele28_eta2p1_WPTight_Gsf_HT150"};
+  TTreeReaderValue<Bool_t> HLT_Ele28_HighEta_SC20_Mass55 = {fReader, "HLT_Ele28_HighEta_SC20_Mass55"};
+  TTreeReaderValue<Bool_t> HLT_Ele15_IsoVVVL_PFHT450_PFMET50 = {fReader, "HLT_Ele15_IsoVVVL_PFHT450_PFMET50"};
+  TTreeReaderValue<Bool_t> HLT_Ele15_IsoVVVL_PFHT450 = {fReader, "HLT_Ele15_IsoVVVL_PFHT450"};
+  TTreeReaderValue<Bool_t> HLT_Ele15_IsoVVVL_PFHT600 = {fReader, "HLT_Ele15_IsoVVVL_PFHT600"};
+  TTreeReaderValue<Bool_t> HLT_Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30 = {fReader, "HLT_Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"};
+  TTreeReaderValue<Bool_t> HLT_Ele17_CaloIdM_TrackIdM_PFJet30 = {fReader, "HLT_Ele17_CaloIdM_TrackIdM_PFJet30"};
+  TTreeReaderValue<Bool_t> HLT_Ele23_CaloIdM_TrackIdM_PFJet30 = {fReader, "HLT_Ele23_CaloIdM_TrackIdM_PFJet30"};
+  TTreeReaderValue<Bool_t> HLT_Ele115_CaloIdVT_GsfTrkIdT = {fReader, "HLT_Ele115_CaloIdVT_GsfTrkIdT"};
+  TTreeReaderValue<Bool_t> HLT_Ele135_CaloIdVT_GsfTrkIdT = {fReader, "HLT_Ele135_CaloIdVT_GsfTrkIdT"};
+  TTreeReaderValue<Bool_t> HLT_Ele145_CaloIdVT_GsfTrkIdT = {fReader, "HLT_Ele145_CaloIdVT_GsfTrkIdT"};
+  TTreeReaderValue<Bool_t> HLT_Ele200_CaloIdVT_GsfTrkIdT = {fReader, "HLT_Ele200_CaloIdVT_GsfTrkIdT"};
+  TTreeReaderValue<Bool_t> HLT_Ele300_CaloIdVT_GsfTrkIdT = {fReader, "HLT_Ele300_CaloIdVT_GsfTrkIdT"};
+  TTreeReaderValue<Bool_t> HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL = {fReader, "HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL"};
+  TTreeReaderValue<Bool_t> HLT_IsoMu27_MET90 = {fReader, "HLT_IsoMu27_MET90"};
+  TTreeReaderValue<Bool_t> HLT_Mu23_Mu12_SameSign = {fReader, "HLT_Mu23_Mu12_SameSign"};
+  TTreeReaderValue<Bool_t> HLT_Mu23_Mu12 = {fReader, "HLT_Mu23_Mu12"};
+  TTreeReaderValue<Bool_t> HLT_Mu23_Mu12_DZ = {fReader, "HLT_Mu23_Mu12_DZ"};*/
   
   //__________________________________________________________________________________________________________
 
@@ -735,13 +780,18 @@ void AnaScript::Init(TTree *tree)
 
   _run3 = false; if(_campaign == "Summer22") _run3 = true;
   
-  fReader.SetTree(tree);
+  //Setting up the fReaders:
+  fReader                .SetTree(tree);
   if(_run3)  fReader_Run3.SetTree(tree);
   else       fReader_Run2.SetTree(tree);
-  if(_data == 0){//If the input file is MC, activate fReader_MC 
-    fReader_MC                .SetTree(tree);
-    if(!_run3) fReader_Run2_MC.SetTree(tree);
-    else       fReader_Run3_MC.SetTree(tree);
+  
+  if(_data == 0){              //If the input file is MC, activate fReader_MC 
+    fReader_MC.SetTree(tree);
+    if(!_run3) {
+      fReader_Run2_MC.SetTree(tree);
+      if(_flag != "qcd") fReader_Run2_MC_nonQCD.SetTree(tree);
+    }
+    else fReader_Run3_MC.SetTree(tree);
   }
   
   // Assigning address to the pointers for variables that have different names in Run2 and Run3.

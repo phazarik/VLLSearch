@@ -299,7 +299,7 @@ double AnaScript::returnPileUpWt(TString mode){
   int ntrueInteractions = (int)*Pileup_nTrueInt;
   for(const auto& entry : pileupwtPOG) {
     bool campaign_match   = entry.campaign == _campaign;
-    int nmatch = ntrueInteractions == entry.ntrueInt;
+    bool nmatch = ntrueInteractions == (int)entry.ntrueInt;
     if(campaign_match){
       if(nmatch){
         if (mode == "nom")           return entry.sf;
