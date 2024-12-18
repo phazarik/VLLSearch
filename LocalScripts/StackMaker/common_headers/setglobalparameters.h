@@ -1,19 +1,17 @@
 #ifndef SETGLOBALPARAMETERS_H
 #define SETGLOBALPARAMETERS_H
 
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
+//#include <nlohmann/json.hpp>
+//using json = nlohmann::json;
 using namespace std;
 
-//Global variables being used by the class:
-extern float globalSbyB;
-extern float globalObsbyExp;
-extern float globalObsbyExpErr;
-extern double QCDscale, TOPscale, DYscale;
-extern nlohmann::json lumiData;
-extern double datalumi;
-extern bool toLog;
-extern bool toZoom;
+//Global variables:
+extern TString input_path;
+extern int     nbins, rebin;
+extern float   xmin, xmax;
+extern float   globalSbyB, globalObsbyExp, globalObsbyExpErr;
+extern double  QCDscale, TOPscale, DYscale;
+extern bool    toLog, toZoom, toSave, toOverlayData;
 extern TString campaign, campaign_name;
 extern TString channel;
 extern TString tag1, tag2, tag3, info;
@@ -32,10 +30,11 @@ void InitializeValues(){
   //Custom settings/global-scaling for each campaign:
   if(campaign == "2016preVFP_UL"){
     campaign_name = "19.7 fb^{-1} (2016-preVFP)";
+    /*
     if(channel == "mm")      QCDscale = 0.114030;
     else if(channel == "me") QCDscale = 0.171091;
     else if(channel == "em") QCDscale = 0.059742;
-    else if(channel == "ee") QCDscale = 0.059742;
+    else if(channel == "ee") QCDscale = 0.059742;*/
   }
   else if(campaign == "2016postVFP_UL"){
     campaign_name = "16.2 fb^{-1} (2016-postVFP)";
@@ -45,11 +44,12 @@ void InitializeValues(){
   }
   else if(campaign == "2018_UL"){
     campaign_name = "59.8 fb^{-1} (2018)";
+    /*
     if(channel == "mm")      QCDscale = 0.141906;
     else if(channel == "me") QCDscale = 0.078759;
     else if(channel == "em") QCDscale = 0.187960;
     else if(channel == "ee") QCDscale = 0.407880;
-  }
+    }*/
 
   //Names:
   if     (channel == "ee") tag2 = info+" (ee)";
@@ -57,8 +57,10 @@ void InitializeValues(){
   else if(channel == "me") tag2 = info+" (#mue)";
   else if(channel == "mm") tag2 = info+" (#mu#mu)";
   else cout<<"\033[31mGlobal: Please provide correct channel name!\033[0m"<<endl;
+  }
 }
 
+  /*
 void loadLuminosityData(string jsonfilepath) {
   std::ifstream jsonFile(jsonfilepath);
   if (jsonFile.is_open()) {
@@ -80,7 +82,7 @@ void SetLumi(){
     loadLuminosityData("../../Metadata/jsondata/lumidata_2016preVFP_UL.json");
     //cout<<"Setting datalumi = "<<datalumi<<endl;
   }
-}
+  }
 
 TString sample_alias(TString newname){
 
@@ -102,6 +104,6 @@ TString sample_alias(TString newname){
     //if(newname != oldname) cout<<"\033[93mWarning: "+newname+" -> "+oldname+"\033[0m"<<endl;
   }
   return oldname; 
-}
+  }*/
 
 #endif //SETGLOBALPARAMETERS_H

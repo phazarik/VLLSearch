@@ -1,33 +1,26 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <string>
 #include "decorations.h"
 #include "setglobalparameters.h"
-#include <string>
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
-using namespace std;
 
-//Global variables being used by the class:
+//Global variables:
 extern TString input_path;
-extern int     nbins;
-extern float   xmin;
-extern float   xmax;
-extern int     rebin;
-extern float   globalSbyB;
-extern float   globalObsbyExp;
-extern float   globalObsbyExpErr;
+extern int     nbins, rebin;
+extern float   xmin, xmax;
+extern float   globalSbyB, globalObsbyExp, globalObsbyExpErr;
 extern double  QCDscale, TOPscale, DYscale;
-extern bool    toZoom;
-extern double  datalumi;
-extern TString campaign;
-extern nlohmann::json lumiData;
+extern bool    toLog, toZoom, toSave, toOverlayData;
+extern TString campaign, campaign_name;
+extern TString channel;
+extern TString tag1, tag2, tag3, info;
 
 //--------------------------------------------------
 // File handling:
 //--------------------------------------------------
 
-bool file_exists(TString filename){
+inline bool file_exists(TString filename){
   std::string filepath = (std::string)filename;
   std::ifstream file(filepath);
   return file.good();
@@ -104,30 +97,6 @@ TH1F *get_hist(
   SetLastBinAsOverflow(hst);
   hst->Rebin(rebin);
 
-  float scalefactor = 0;
-  double jsonlumi = 0;
-  TString sam_json = sample_alias(sample);
-  TString sub_json = sample_alias(subsample);
-
-  try    {jsonlumi = lumiData.at(sam_json.Data()).at(sub_json.Data()).get<double>();}
-  catch (const json::out_of_range& e) {
-    DisplayText("Luminosity data not found for " + sample + " " + subsample, 31);
-    return nullptr;
-  }
-  catch (const json::exception& e) {
-    DisplayText("Luminosity data not found for " + sample + " " + subsample, 31);
-    return nullptr;
-  }
-  
-  if(sample!="SingleMuon" || sample!="EGamma" || sample!="SingleElectron") hst->Scale( datalumi/jsonlumi);
-
-  //Additional scaling on MC:
-  if (sample == "QCD_MuEnriched" || sample == "QCD_EMEnriched") hst->Scale(QCDscale);
-  else if (sample == "TTBar")                                   hst->Scale(TOPscale);
-  else if (sample == "DYJetsToLL")                              hst->Scale(DYscale);
-
-  //cout<<"Hist "+var+" for "+sample+"_"+subsample+" loaded and scaled to : "+scalefactor<<endl;
-  //cout<<"Hist "+var+" for "+sample+"_"+subsample+" loaded, lumi = "+jsonlumi<<endl;
   return hst;
 }
 
@@ -153,12 +122,10 @@ TH1F* merge_and_decorate(vector<TH1F*>sample, TString samplename, int color) {
       hist->Add(sample[i]);
     }
   }
-
   if(allnull){
     DisplayText("Null warning : All "+samplename+" hists are null!", 33);
     return nullptr;
   }
-  
   if(hist) {
     SetHistoStyle(hist, color);
     hist->SetName(samplename);
@@ -421,13 +388,6 @@ void DisplayYieldsInBins(TH1F *hst){
   cout<<hst->GetName()<<endl;
   cout<<"------------------"<<endl;
   float total = 0;
-  /*
-  cout<<"nbin"<<"\t"<<"nhst"<<"\t"<<"hsterr"<<endl;
-  for(int bin=1; bin<=nbins; bin++){
-    float nhst   = hst->GetBinContent(bin);
-    float hsterr = hst->GetBinError(bin);
-    cout<<bin<<"\t"<<nhst<<"\t"<<hsterr<<endl;
-    }*/
   for(int bin=0; bin<=nbins; bin++){
     float nhst   = hst->GetBinContent(bin);
     cout<<nhst<<endl;

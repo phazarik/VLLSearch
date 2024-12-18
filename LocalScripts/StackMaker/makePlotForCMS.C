@@ -11,41 +11,31 @@
 #include "TH1F.h"
 #include "THStack.h"
 #include "TCanvas.h"
-#include "TCut.h"
 #include "TMathText.h"
 #include "TLine.h"
+using namespace std;
 
-//For parsing json files:
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
+//Global parameters used by the other headers:
+TString input_path;
+int     nbins, rebin;
+float   xmin, xmax;
+float   globalSbyB, globalObsbyExp, globalObsbyExpErr;
+double  QCDscale, TOPscale, DYscale;
+bool    toLog, toZoom, toSave, toOverlayData;
+TString campaign, campaign_name;
+TString channel;
+TString tag1, tag2, tag3, info;
 
 //My header files:
 #include "common_headers/settings.h"
 #include "common_headers/decorations.h"
 #include "common_headers/setglobalparameters.h"
-using namespace std;
-
-//Global parameters used by the other headers:
-TString input_path;
-int     nbins;
-float   xmin;
-float   xmax;
-int     rebin;
-float   globalSbyB;
-float   globalObsbyExp;
-float   globalObsbyExpErr;
-double  QCDscale, TOPscale, DYscale;
-bool    toLog, toZoom, toSave, toOverlayData;
-double  datalumi;
-TString campaign, campaign_name;
-TString channel;
-TString tag1, tag2, tag3, info;
-nlohmann::json lumiData;
 
 //Function declaration:
 void plot(TString var, TString name);
 
-void makePlotForCMS(TString _var = "HT", TString _name = "HT (GeV)", int _nbins = 200, float _xmin = 0.0, float _xmax = 1000, int _rebin = 1){
+//main:
+void makePlotForCMS(TString _var = "STfrac", TString _name = "STfrac (GeV)", int _nbins = 200, float _xmin = 0.0, float _xmax = 1000, int _rebin = 1){
   
   //Set global parameters:
   channel = "mm";
@@ -53,19 +43,14 @@ void makePlotForCMS(TString _var = "HT", TString _name = "HT (GeV)", int _nbins 
   toSave = false;
   toOverlayData = true;
 
-  TString jobname = "hist_2LSS_2018UL_topVR_METscaled_Nov17_"+channel;
+  TString jobname = "hist_2018UL_baseline_Dec18_"+channel;
   input_path = "../input_files/hists/"+jobname;
-  tag1 = campaign+"_topVR_"+channel; //folder name
-  info = "top VR"; //Event selection
+  tag1 = campaign+"_test_"+channel; //folder name
+  info = "test"; //Event selection
   tag3 = ""; //Additional info
   rebin = _rebin;
   
   InitializeValues();
-  SetLumi();
-
-  //Information requited to make a plot are kept in a struct, which are fed from outside..
-  //struct plotdata{TString var; TString name; int nbins; float xmin; float xmax;int rebin;};
-  //vector<plotdata} p = {{.var=_var, .name= _name, .nbins=_nbins, .xmin=_xmin, .xmax=_xmax, .rebin=_rebin}};  
 
   cout<<"Making plot for "<<_name<<endl;
   plot(_var, _name);
@@ -73,18 +58,15 @@ void makePlotForCMS(TString _var = "HT", TString _name = "HT (GeV)", int _nbins 
   
 }//End macro
 
-//----------------------------
-// Plotmaker:
-//----------------------------
+//________________________________________________________________________________________________________________
+//
+// Plotmaker for one histogram:
+//________________________________________________________________________________________________________________
 
 void plot(TString var, TString name){
 
   Double_t ymin = 0.1;
-  Double_t ymax = 10E5;
-  
-  //rebin = 1; //overriding rebin
-  //cout<<"Test : toZoom = "<<toZoom;
-  //cout<<"\txmin, xmax = "<<xmin<<" "<<xmax<<endl;
+  Double_t ymax = 10E8;
 
   TString date_stamp  = todays_date();
   TString dump_folder = "plots/"+date_stamp+"_"+tag1;
@@ -118,8 +100,7 @@ void plot(TString var, TString name){
     get_hist(var, "SingleTop", "s-channel_LeptonDecays"),
     get_hist(var, "SingleTop", "t-channel_AntiTop_InclusiveDecays"),
     get_hist(var, "SingleTop", "t-channel_Top_InclusiveDecays"),
-    //get_hist(var, "SingleTop", "tW_AntiTop_InclusiveDecays"),
-    get_hist(var, "SingleTop", "tW_AntiTop_InclusiceDecays"),
+    get_hist(var, "SingleTop", "tW_AntiTop_InclusiveDecays"),
     get_hist(var, "SingleTop", "tW_Top_InclusiveDecays")
   };
   vector<TH1F *>THX = {
@@ -178,7 +159,7 @@ void plot(TString var, TString name){
     get_hist(var, "WW", "WWTo2L2Nu"),
     get_hist(var, "WW", "WWTo4Q"),
     get_hist(var, "WZ", "WZTo1L1Nu2Q"),
-    get_hist(var, "WZ", "WZTo2Q2L"),
+    get_hist(var, "WZ", "WZTo2L2Q"),
     get_hist(var, "WZ", "WZTo3LNu"),
     get_hist(var, "ZZ", "ZZTo2L2Nu"),
     get_hist(var, "ZZ", "ZZTo2Q2L"),
@@ -187,6 +168,7 @@ void plot(TString var, TString name){
   };
   vector<TH1F *>WpWp={
     get_hist(var, "WpWp", "WpWpJJEWK"),
+    get_hist(var, "WpWp", "WpWpJJQCD"),
   };
   //Backgrounds with VVV:
   vector<TH1F *>VVV={
@@ -222,6 +204,7 @@ void plot(TString var, TString name){
     //get_hist(var, "EGamma", "EGamma_E"),
     //get_hist(var, "EGamma", "EGamma_F"),
   };
+  cout<<"Histograms loaded."<<endl;
 
   //______________________________________________________________
 
@@ -344,7 +327,6 @@ void plot(TString var, TString name){
     cout<<defaultfloat<<endl;
   }
 
-  
   //______________________________________________________________
   
   //                     PLOTTING ON CANVAS
@@ -522,8 +504,42 @@ void plot(TString var, TString name){
     createFolder(dump_folder);
     canvas->SaveAs(filename+".png");
   }
-  
 
-}//end plotmaker
+  /*
+  //Cleanup:
+  delete allbkg;
+  delete bkgstack;
+  delete sig1;
+  delete sig2;
+  delete sig3;
+  delete hst_smuon;
+  delete hst_egamma;
+  delete hst_data;
+  delete dummy;
+  if(sbyrb) delete sbyrb;
+  if(ratiohist) delete ratiohist;
+  for (auto hist : bkg)  delete hist;*/
 
-  
+  /*
+  bkg.clear();
+  sigvec.clear();
+  QCD.clear();
+  ST.clear();
+  THX.clear();
+  TZq.clear();
+  TTBar.clear();
+  TTW.clear();
+  TTZ.clear();
+  TTX.clear();
+  WJets.clear();
+  WGamma.clear();
+  DY.clear();
+  ZGamma.clear();
+  VV.clear();
+  WpWp.clear();
+  VVV.clear();
+  Higgs.clear();
+  SingleMuon.clear();
+  EGamma.clear();*/
+
+}//End plotmaker
