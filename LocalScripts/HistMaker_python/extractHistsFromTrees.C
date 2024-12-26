@@ -51,8 +51,8 @@ map<string, map<string, float>> loadJson(const string &filename) {
 }
 
 void extractHistsFromTrees(
-			   const std::string& jobname  = "tree_2018UL_baseline_Dec12",
-			   const std::string& dump     = "test_onlyC_mm",
+			   const std::string& jobname  = "tree_2018UL_baseline_Dec17",
+			   const std::string& dump     = "hist_2018UL_baseline_Dec26",
 			   const std::string& campaign = "2018_UL",
 			   const std::string& channel  = "mm",
 			   bool test   = false,

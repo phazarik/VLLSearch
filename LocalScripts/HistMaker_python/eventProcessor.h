@@ -96,8 +96,8 @@ void processTree(
     {"LT",    "LT",    0, 0, 0, {0, 25, 50, 100, 200, 300, 400, 500}}, //variable binning
     {"STvis", "STvis", 0, 0, 0, {0, 25, 50, 100, 200, 300, 400, 500}}, //variable binning
     {"ST",    "ST",    0, 0, 0, {0, 25, 50, 100, 200, 300, 400, 500}}, //variable binning
-    {"STfrac", "STfrac", 100, 0, 1.1, {}},
     {"HTMETllpt", "HTMETllpt", 0, 0, 0, {0, 25, 50, 100, 200, 300, 400, 500}}, //variable binning
+    {"STfrac", "STfrac", 100, 0, 1.1, {}},
     {"metpt", "metpt", 0, 0, 0, {0, 25, 50, 100, 200, 300, 400, 500}}, //variable binning
     {"metphi", "metphi", 100, -4, 4, {}},
     // dphis:
@@ -159,7 +159,7 @@ void processTree(
     // Corrections to the histograms:
     //--------------------------------
 
-    //wt = wt*wt_leptonSF*wt_trig; //Object corrections
+    wt = wt*wt_leptonSF*wt_trig*wt_pileup; //Object corrections
     //wt = wt*wt_bjet;             //Adding b-tagging corrections
 
     event_selection = channel_selection;
