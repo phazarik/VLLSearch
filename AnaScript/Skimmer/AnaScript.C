@@ -249,27 +249,6 @@ Bool_t AnaScript::Process(Long64_t entry)
       // Skimming
       //----------------------------------------------------------------------------------------------------------
 
-      /*
-      //Forcing TTreeReader to read some of the MC branches:
-      if(_data==0){
-	float Pileup_nTrueInt = (float)Pileup_nTrueInt;
-	float LHEwt=0; float LHEreweight=0; float LHEscaleweight=0;
-	if(_flag!="qcd"){
-	for(unsigned int i=0; i<(unsigned int)**ptr_nLHEPdfWeight; i++)
-	  LHEwt          = (float)(*ptr_LHEPdfWeight)[i];
-	for(unsigned int i=0; i<(unsigned int)**ptr_nLHEReweightingWeight; i++ )
-	  LHEreweight    = (float)(*ptr_LHEReweightingWeight)[i];
-	for(unsigned int i=0; i<(unsigned int)**ptr_nLHEScaleWeight; i++ )
-	  LHEscaleweight = (float)(*ptr_LHEScaleWeight)[i];
-	}
-	if(*Pileup_nTrueInt > 0){
-	  cout<<"Forcing TTreeReader to read some MC branches"<<"\t";
-	  cout<<*Pileup_nTrueInt<<endl;
-	  //cout<<LHEwt<<"\t"<<LHEreweight<<"\t"<<LHEscaleweight<<endl;
-	}
-	}*/
-
-
       bool keep_this_event = false;
       
       //-----------
@@ -298,7 +277,6 @@ Bool_t AnaScript::Process(Long64_t entry)
       //--------------
       // For Shalini
       //--------------
-      
       /*
       if((int)LooseLepton.size()>=2){
 	

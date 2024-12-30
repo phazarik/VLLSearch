@@ -28,15 +28,15 @@ toDebug = args.debug   ### For debugging the condor-script
 
 campaign = "2018_UL"  ### Options: 2016preVFP_UL, 2016postVFP_UL, 2017_UL, 2018_UL
 mode = "tree"                ### Options: 'hist', 'skim', 'tree'
-file_type = 'normal'         ### Options:  'normal', 'skimmed'
+file_type = 'skimmed'         ### Options:  'normal', 'skimmed'
 
-#condorsamples = ["DYJetsToLL", "ZGamma", "HTbinnedWJets", "QCD_MuEnriched", "QCD_EMEnriched", "SingleTop", "TTBar", "TTW", "TTZ", "WW", "WZ", "ZZ", "Rare", "WWZ", "WZZ", "ZZZ", "Higgs", "WpWp", "WWW", "WGamma", "VLLS_ele", "VLLS_mu", "VLLD_ele", "VLLS_tau", "VLLD_mu"]
+condorsamples = ["DYJetsToLL", "ZGamma", "HTbinnedWJets", "QCD_MuEnriched", "QCD_EMEnriched", "SingleTop", "TTBar", "TTW", "TTZ", "WW", "WZ", "ZZ", "Rare", "WWZ", "WZZ", "ZZZ", "Higgs", "WpWp", "WWW", "WGamma", "VLLS_ele", "VLLS_mu", "VLLD_ele", "VLLS_tau", "VLLD_mu"]
 #condorsamples = ["DYJetsToLL", "SingleTop", "TTBar", "TTW", "TTZ", "WW", "WZ", "ZZ"]
-#if '2018' not in campaign: condorsamples.extend(["SingleMuon", "SingleElectron"])
-#else:                      condorsamples.extend(["SingleMuon", "EGamma"])
+if '2018' not in campaign: condorsamples.extend(["SingleMuon", "SingleElectron"])
+else:                      condorsamples.extend(["SingleMuon", "EGamma"])
 #condorsamples = ["SingleMuon", "SingleElectron"]
 #condorsamples = ["SingleMuon", "EGamma"]
-condorsamples = ["WpWp"]
+#condorsamples = ["WpWp"]
 
 #_____________________________________________________________
 #
@@ -71,7 +71,7 @@ with open(jsonfile,'r') as infile: samplelist = json.load(infile)
 ### Base input directory
 nanoAOD_path = None
 if file_type == 'skimmed' :
-    if "2018" in campaign:          nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2018UL_baseline_Dec10"
+    if "2018" in campaign:          nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2018UL_baseline_Dec16"
     elif "2017" in campaign:        nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2017UL_baseline_Dec04"
     elif "2016preVFP"  in campaign: nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2016preVFPUL_baseline_Dec11"
     elif "2016postVFP" in campaign: nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2016postVFPUL_baseline_Dec11"

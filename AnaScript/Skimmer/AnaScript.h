@@ -386,10 +386,6 @@ class AnaScript : public TSelector {
   TTreeReaderArray<int_or_short> GenVisTau_genPartIdxMother = {fReader_MC, "GenVisTau_genPartIdxMother"};
   TTreeReaderArray<int_or_char>  GenVisTau_status =           {fReader_MC, "GenVisTau_status"};
 
-  //GenMET
-  TTreeReaderValue<Float_t> GenMET_phi =         {fReader_MC, "GenMET_phi"};
-  TTreeReaderValue<Float_t> GenMET_pt =          {fReader_MC, "GenMET_pt"};
-
   /*
   //btagWeight
   TTreeReaderValue<Float_t> btagWeight_CSVV2 =    {fReader_MC, "btagWeight_CSVV2"};
@@ -470,6 +466,7 @@ class AnaScript : public TSelector {
   // For 2016: HLT_IsoMu24 and HLT_Ele27_WPTight_Gsf; offline_cuts: 26, 30
 
   /*
+  //For Shalini:
   TTreeReaderValue<Bool_t> HLT_DoubleEle25_CaloIdL_MW = {fReader, "HLT_DoubleEle25_CaloIdL_MW"};
   TTreeReaderValue<Bool_t> HLT_DoubleEle27_CaloIdL_MW = {fReader, "HLT_DoubleEle27_CaloIdL_MW"};
   TTreeReaderValue<Bool_t> HLT_DoubleEle33_CaloIdL_MW = {fReader, "HLT_DoubleEle33_CaloIdL_MW"};
@@ -512,9 +509,108 @@ class AnaScript : public TSelector {
   TTreeReaderValue<Bool_t> HLT_IsoMu27_MET90 = {fReader, "HLT_IsoMu27_MET90"};
   TTreeReaderValue<Bool_t> HLT_Mu23_Mu12_SameSign = {fReader, "HLT_Mu23_Mu12_SameSign"};
   TTreeReaderValue<Bool_t> HLT_Mu23_Mu12 = {fReader, "HLT_Mu23_Mu12"};
-  TTreeReaderValue<Bool_t> HLT_Mu23_Mu12_DZ = {fReader, "HLT_Mu23_Mu12_DZ"};*/
+  TTreeReaderValue<Bool_t> HLT_Mu23_Mu12_DZ = {fReader, "HLT_Mu23_Mu12_DZ"};
+
+  //Gen
+  TTreeReaderValue<UInt_t> nPSWeight = {fReader_MC, "nPSWeight"};
+  TTreeReaderArray<Float_t> PSWeight = {fReader_MC, "PSWeight"};
+  TTreeReaderValue<Float_t> genWeight = {fReader_MC, "genWeight"};
+  TTreeReaderArray<Int_t> GenJet_partonFlavour = {fReader_MC, "GenJet_partonFlavour"};
+  TTreeReaderArray<UChar_t> GenJet_hadronFlavour = {fReader_MC, "GenJet_hadronFlavour"};
+
+  TTreeReaderValue<UInt_t> nGenJetAK8 = {fReader_MC, "nGenJetAK8"};
+  TTreeReaderArray<Float_t> GenJetAK8_eta = {fReader_MC, "GenJetAK8_eta"};
+  TTreeReaderArray<Float_t> GenJetAK8_mass = {fReader_MC, "GenJetAK8_mass"};
+  TTreeReaderArray<Float_t> GenJetAK8_phi = {fReader_MC, "GenJetAK8_phi"};
+  TTreeReaderArray<Float_t> GenJetAK8_pt = {fReader_MC, "GenJetAK8_pt"};
+  TTreeReaderArray<Int_t> GenJetAK8_partonFlavour = {fReader_MC, "GenJetAK8_partonFlavour"};
+  TTreeReaderArray<UChar_t> GenJetAK8_hadronFlavour = {fReader_MC, "GenJetAK8_hadronFlavour"};
   
-  //__________________________________________________________________________________________________________
+  TTreeReaderValue<UInt_t> nSubGenJetAK8 = {fReader_MC, "nSubGenJetAK8"};
+  TTreeReaderArray<Float_t> SubGenJetAK8_eta = {fReader_MC, "SubGenJetAK8_eta"};
+  TTreeReaderArray<Float_t> SubGenJetAK8_mass = {fReader_MC, "SubGenJetAK8_mass"};
+  TTreeReaderArray<Float_t> SubGenJetAK8_phi = {fReader_MC, "SubGenJetAK8_phi"};
+  TTreeReaderArray<Float_t> SubGenJetAK8_pt = {fReader_MC, "SubGenJetAK8_pt"};
+
+  TTreeReaderValue<Float_t> GenMET_phi = {fReader_MC, "GenMET_phi"};
+  TTreeReaderValue<Float_t> GenMET_pt = {fReader_MC, "GenMET_pt"};
+
+  TTreeReaderArray<Int_t> Muon_genPartIdx = {fReader_MC, "Muon_genPartIdx"};
+  TTreeReaderArray<Int_t> Electron_genPartIdx = {fReader_MC, "Electron_genPartIdx"};
+  TTreeReaderArray<UChar_t> Electron_genPartFlav = {fReader_MC, "Electron_genPartFlav"};
+
+  TTreeReaderValue<UInt_t> nGenDressedLepton = {fReader_MC, "nGenDressedLepton"};
+  TTreeReaderArray<Float_t> GenDressedLepton_eta = {fReader_MC, "GenDressedLepton_eta"};
+  TTreeReaderArray<Float_t> GenDressedLepton_mass = {fReader_MC, "GenDressedLepton_mass"};
+  TTreeReaderArray<Float_t> GenDressedLepton_phi = {fReader_MC, "GenDressedLepton_phi"};
+  TTreeReaderArray<Float_t> GenDressedLepton_pt = {fReader_MC, "GenDressedLepton_pt"};
+  TTreeReaderArray<Int_t> GenDressedLepton_pdgId = {fReader_MC, "GenDressedLepton_pdgId"};
+  TTreeReaderArray<Bool_t> GenDressedLepton_hasTauAnc = {fReader_MC, "GenDressedLepton_hasTauAnc"};
+
+  TTreeReaderValue<UInt_t> nLHEPart = {fReader_MC, "nLHEPart"};
+  TTreeReaderArray<Float_t> LHEPart_pt = {fReader_MC, "LHEPart_pt"};
+  TTreeReaderArray<Float_t> LHEPart_eta = {fReader_MC, "LHEPart_eta"};
+  TTreeReaderArray<Float_t> LHEPart_phi = {fReader_MC, "LHEPart_phi"};
+  TTreeReaderArray<Float_t> LHEPart_mass = {fReader_MC, "LHEPart_mass"};
+  TTreeReaderArray<Float_t> LHEPart_incomingpz = {fReader_MC, "LHEPart_incomingpz"};
+  TTreeReaderArray<Int_t> LHEPart_pdgId = {fReader_MC, "LHEPart_pdgId"};
+  TTreeReaderArray<Int_t> LHEPart_status = {fReader_MC, "LHEPart_status"};
+  TTreeReaderArray<Int_t> LHEPart_spin = {fReader_MC, "LHEPart_spin"};
+
+  TTreeReaderValue<Float_t> LHEWeight_originalXWGTUP = {fReader_MC, "LHEWeight_originalXWGTUP"};
+  TTreeReaderValue<UInt_t> nLHEPdfWeight = {fReader_MC, "nLHEPdfWeight"};
+  TTreeReaderArray<Float_t> LHEPdfWeight = {fReader_MC, "LHEPdfWeight"};
+  TTreeReaderValue<UInt_t> nLHEReweightingWeight = {fReader_MC, "nLHEReweightingWeight"};
+  TTreeReaderArray<Float_t> LHEReweightingWeight = {fReader_MC, "LHEReweightingWeight"};
+  TTreeReaderValue<UInt_t> nLHEScaleWeight = {fReader_MC, "nLHEScaleWeight"};
+  TTreeReaderArray<Float_t> LHEScaleWeight = {fReader_MC, "LHEScaleWeight"};
+
+  //Reco:
+  TTreeReaderValue<UInt_t> nSubJet = {fReader, "nSubJet"};
+  TTreeReaderArray<Float_t> SubJet_btagCSVV2 = {fReader, "SubJet_btagCSVV2"};
+  TTreeReaderArray<Float_t> SubJet_btagDeepB = {fReader, "SubJet_btagDeepB"};
+  TTreeReaderArray<Float_t> SubJet_eta = {fReader, "SubJet_eta"};
+  TTreeReaderArray<Float_t> SubJet_mass = {fReader, "SubJet_mass"};
+  TTreeReaderArray<Float_t> SubJet_n2b1 = {fReader, "SubJet_n2b1"};
+  TTreeReaderArray<Float_t> SubJet_n3b1 = {fReader, "SubJet_n3b1"};
+  TTreeReaderArray<Float_t> SubJet_phi = {fReader, "SubJet_phi"};
+  TTreeReaderArray<Float_t> SubJet_pt = {fReader, "SubJet_pt"};
+  TTreeReaderArray<Float_t> SubJet_rawFactor = {fReader, "SubJet_rawFactor"};
+  TTreeReaderArray<Float_t> SubJet_tau1 = {fReader, "SubJet_tau1"};
+  TTreeReaderArray<Float_t> SubJet_tau2 = {fReader, "SubJet_tau2"};
+  TTreeReaderArray<Float_t> SubJet_tau3 = {fReader, "SubJet_tau3"};
+  TTreeReaderArray<Float_t> SubJet_tau4 = {fReader, "SubJet_tau4"};
+
+  TTreeReaderValue<UInt_t> nLowPtElectron = {fReader, "nLowPtElectron"};
+  TTreeReaderArray<Float_t> LowPtElectron_ID = {fReader, "LowPtElectron_ID"};
+  TTreeReaderArray<Float_t> LowPtElectron_convVtxRadius = {fReader, "LowPtElectron_convVtxRadius"};
+  TTreeReaderArray<Float_t> LowPtElectron_deltaEtaSC = {fReader, "LowPtElectron_deltaEtaSC"};
+  TTreeReaderArray<Float_t> LowPtElectron_dxy = {fReader, "LowPtElectron_dxy"};
+  TTreeReaderArray<Float_t> LowPtElectron_dxyErr = {fReader, "LowPtElectron_dxyErr"};
+  TTreeReaderArray<Float_t> LowPtElectron_dz = {fReader, "LowPtElectron_dz"};
+  TTreeReaderArray<Float_t> LowPtElectron_dzErr = {fReader, "LowPtElectron_dzErr"};
+  TTreeReaderArray<Float_t> LowPtElectron_eInvMinusPInv = {fReader, "LowPtElectron_eInvMinusPInv"};
+  TTreeReaderArray<Float_t> LowPtElectron_embeddedID = {fReader, "LowPtElectron_embeddedID"};
+  TTreeReaderArray<Float_t> LowPtElectron_energyErr = {fReader, "LowPtElectron_energyErr"};
+  TTreeReaderArray<Float_t> LowPtElectron_eta = {fReader, "LowPtElectron_eta"};
+  TTreeReaderArray<Float_t> LowPtElectron_hoe = {fReader, "LowPtElectron_hoe"};
+  TTreeReaderArray<Float_t> LowPtElectron_mass = {fReader, "LowPtElectron_mass"};
+  TTreeReaderArray<Float_t> LowPtElectron_miniPFRelIso_all = {fReader, "LowPtElectron_miniPFRelIso_all"};
+  TTreeReaderArray<Float_t> LowPtElectron_miniPFRelIso_chg = {fReader, "LowPtElectron_miniPFRelIso_chg"};
+  TTreeReaderArray<Float_t> LowPtElectron_phi = {fReader, "LowPtElectron_phi"};
+  TTreeReaderArray<Float_t> LowPtElectron_pt = {fReader, "LowPtElectron_pt"};
+  TTreeReaderArray<Float_t> LowPtElectron_ptbiased = {fReader, "LowPtElectron_ptbiased"};
+  TTreeReaderArray<Float_t> LowPtElectron_r9 = {fReader, "LowPtElectron_r9"};
+  TTreeReaderArray<Float_t> LowPtElectron_scEtOverPt = {fReader, "LowPtElectron_scEtOverPt"};
+  TTreeReaderArray<Float_t> LowPtElectron_sieie = {fReader, "LowPtElectron_sieie"};
+  TTreeReaderArray<Float_t> LowPtElectron_unbiased = {fReader, "LowPtElectron_unbiased"};
+  TTreeReaderArray<Int_t> LowPtElectron_charge = {fReader, "LowPtElectron_charge"};
+  TTreeReaderArray<Int_t> LowPtElectron_convWP = {fReader, "LowPtElectron_convWP"};
+  TTreeReaderArray<Int_t> LowPtElectron_pdgId = {fReader, "LowPtElectron_pdgId"};
+  TTreeReaderArray<Bool_t> LowPtElectron_convVeto = {fReader, "LowPtElectron_convVeto"};
+  TTreeReaderArray<UChar_t> LowPtElectron_lostHits = {fReader, "LowPtElectron_lostHits"};*/
+  
+//__________________________________________________________________________________________________________
 
   //                                  SPECIAL BRANCHES THAT CHANGED NAME
   //----------------------------------------------------------------------------------------------------------

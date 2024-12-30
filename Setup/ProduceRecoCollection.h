@@ -150,7 +150,7 @@ void AnaScript::createJets(){
     temp.hadronflavor = -1;
     if(_data==0) temp.hadronflavor = Jet_hadronFlavour[i];
 
-    bool ptetacut = temp.v.Pt()>30 && fabs(temp.v.Eta())<2.4;
+    bool ptetacut = temp.v.Pt()>50 && fabs(temp.v.Eta())<2.4; //warning
     bool cleaned_from_leptons = clean_from_array(temp, LooseLepton, 0.4);
     //bool cleaned_from_muons = clean_from_array(temp, Muon, 0.4);
     //bool cleaned_from_taus = clean_from_array(temp, Tau, 0.5);

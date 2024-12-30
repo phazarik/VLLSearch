@@ -9,13 +9,8 @@ void AnaScript::ActivateBranch(TTree *t){
   
   for(auto activeBranchName : {"run","luminosityBlock","event","Flag_*","nMuon","Muon_*","nElectron","Electron_*","nTau","Tau_*","nJet","Jet_*","MET_*","PuppiMET_*","nTrigObj","TrigObj_*", "nPhoton", "Photon_*", "*fixed*", "PV*"})
     t->SetBranchStatus(activeBranchName, 1);
-
-  /*
-  //Trigger_paths:
-  for(auto activeBranchName : {"HLT_IsoMu20","HLT_IsoMu24","HLT_IsoMu27","HLT_Ele32_WPTight_Gsf","HLT_Ele27_WPTight_Gsf"})
-  t->SetBranchStatus(activeBranchName, 1);*/
+  
   for(auto activeBranchName : {"HLT_IsoMu*", "HLT_Ele*"}) t->SetBranchStatus(activeBranchName, 1);
-  //for(auto activeBranchName : {"HLT*"}) t->SetBranchStatus(activeBranchName, 1);
   
   if(_data==0){
     for(auto activeBranchName : {"nGenPart","GenPart_*","nGenJet","GenJet_*","nGenVisTau","GenVisTau_*","GenMET_phi","GenMET_pt", "Pileup*"})  //"*LHE*Weight*" is not avaiable in QCD multijet backgrounds.
@@ -24,6 +19,14 @@ void AnaScript::ActivateBranch(TTree *t){
       for(auto activeBranchName : {"*LHE*Weight*"}) t->SetBranchStatus(activeBranchName, 1);
     }
   }
+
+  /*
+  //For Shalini:
+  for(auto activeBranchName : {"HLT*", "nLowPtElectron", "LowPtElectron_*", "nSubJet", "SubJet_*"}) t->SetBranchStatus(activeBranchName, 1);
+  if(_data==0){
+  for(auto activeBranchName : {"*PSWeight*", "genWeight", "nGenJetAK8", "GenJetAK8_*", "nSubGenJetAK8", "SubGenJetAK8_*", "nGenDressedLepton", "GenDressedLepton_*", "nLHEPart", "LHEPart_*", "*LHE*Weight*"})
+  t->SetBranchStatus(activeBranchName, 1);
+  }*/
 }
 
 void AnaScript::ReadBranch(){
@@ -49,8 +52,11 @@ void AnaScript::ReadBranch(){
    *HLT_Ele35_WPTight_Gsf; //Used in 2018, not in 2016
    */
 
-  /*
+  //--------------
   //For Shalini:
+  //-------------
+  /*
+  //HLT paths:
   *HLT_DoubleEle24_eta2p1_WPTight_Gsf;
   *HLT_DoubleEle25_CaloIdL_MW;
   *HLT_DoubleEle27_CaloIdL_MW;
@@ -95,7 +101,131 @@ void AnaScript::ReadBranch(){
   *HLT_Mu23_Mu12_DZ;
   *HLT_Mu23_Mu12_SameSign;
   *HLT_IsoMu24_eta2p1;
-  */
+
+  //Gen level branches:
+  if(_data == 0){
+    *nPSWeight;
+    for(unsigned int i=0; i<(unsigned int)*nPSWeight; i++) PSWeight[i];
+    *genWeight;
+    for(unsigned int i=0; i<(unsigned int)*nGenJet; i++){
+      GenJet_partonFlavour[i];
+      GenJet_hadronFlavour[i];
+    }
+    *nGenJetAK8;
+    for(unsigned int i=0; i<(unsigned int)*nGenJetAK8; i++){
+      GenJetAK8_eta[i];
+      GenJetAK8_mass[i];
+      GenJetAK8_phi[i];
+      GenJetAK8_pt[i];
+      GenJetAK8_partonFlavour[i];
+      GenJetAK8_hadronFlavour[i];
+    }
+    *nSubGenJetAK8;
+    for(unsigned int i=0; i<(unsigned int)*nSubGenJetAK8; i++){
+      SubGenJetAK8_eta[i];
+      SubGenJetAK8_mass[i];
+      SubGenJetAK8_phi[i];
+      SubGenJetAK8_pt[i];
+    }
+    *GenMET_phi;
+    *GenMET_pt;
+    for(unsigned int i=0; i<(unsigned int)*nMuon; i++){
+      Muon_genPartIdx[i];
+    }
+    for(unsigned int i=0; i<(unsigned int)*nElectron; i++){
+      Electron_genPartIdx[i];
+      Electron_genPartFlav[i];
+    }
+    *nGenDressedLepton;
+    for(unsigned int i=0; i<(unsigned int)*nGenDressedLepton; i++){
+      GenDressedLepton_eta[i];
+      GenDressedLepton_mass[i];
+      GenDressedLepton_phi[i];
+      GenDressedLepton_pt[i];
+      GenDressedLepton_pdgId[i];
+      GenDressedLepton_hasTauAnc[i];
+    }
+    *nLHEPart;
+    for(unsigned int i=0; i<(unsigned int)*nLHEPart; i++){
+      LHEPart_pt[i];
+      LHEPart_eta[i];
+      LHEPart_phi[i];
+      LHEPart_mass[i];
+      LHEPart_incomingpz[i];
+      LHEPart_pdgId[i];
+      LHEPart_status[i];
+      LHEPart_spin[i];
+    }
+    *LHEWeight_originalXWGTUP;
+    *nLHEPdfWeight;
+    for(unsigned int i=0; i<(unsigned int)*nLHEPdfWeight; i++) LHEPdfWeight[i];
+    *nLHEReweightingWeight;
+    for(unsigned int i=0; i<(unsigned int)*nLHEReweightingWeight; i++) LHEReweightingWeight[i];
+    *nLHEScaleWeight;
+    for(unsigned int i=0; i<(unsigned int)*nLHEScaleWeight; i++) LHEScaleWeight[i];
+  }
+  //non-gen
+  *nSubJet;
+  for(unsigned int i=0; i<(unsigned int)*nSubJet; i++){
+    SubJet_btagCSVV2[i];
+    SubJet_btagDeepB[i];
+    SubJet_eta[i];
+    SubJet_mass[i];
+    SubJet_n2b1[i];
+    SubJet_n3b1[i];
+    SubJet_phi[i];
+    SubJet_pt[i];
+    SubJet_rawFactor[i];
+    SubJet_tau1[i];
+    SubJet_tau2[i];
+    SubJet_tau3[i];
+    SubJet_tau4[i];
+  }
+  *nLowPtElectron;
+  for(unsigned int i=0; i<(unsigned int)*nLowPtElectron; i++){
+    LowPtElectron_ID[i];
+    LowPtElectron_convVtxRadius[i];
+    LowPtElectron_deltaEtaSC[i];
+    LowPtElectron_dxy[i];
+    LowPtElectron_dxyErr[i];
+    LowPtElectron_dz[i];
+    LowPtElectron_dzErr[i];
+    LowPtElectron_eInvMinusPInv[i];
+    LowPtElectron_embeddedID[i];
+    LowPtElectron_energyErr[i];
+    LowPtElectron_eta[i];
+    LowPtElectron_hoe[i];
+    LowPtElectron_mass[i];
+    LowPtElectron_miniPFRelIso_all[i];
+    LowPtElectron_miniPFRelIso_chg[i];
+    LowPtElectron_phi[i];
+    LowPtElectron_pt[i];
+    LowPtElectron_ptbiased[i];
+    LowPtElectron_r9[i];
+    LowPtElectron_scEtOverPt[i];
+    LowPtElectron_sieie[i];
+    LowPtElectron_unbiased[i];
+    LowPtElectron_charge[i];
+    LowPtElectron_convWP[i];
+    LowPtElectron_pdgId[i];
+    LowPtElectron_convVeto[i];
+    LowPtElectron_lostHits[i];
+    }*/
+
+  //TrigObj
+  *nTrigObj;
+  for(unsigned int i=0; i<(unsigned int)*nTrigObj; i++){
+    TrigObj_pt[i];
+    TrigObj_eta[i];
+    TrigObj_phi[i];
+    TrigObj_l1pt[i];
+    TrigObj_l1pt_2[i];
+    TrigObj_l2pt[i];
+    TrigObj_id[i];
+    TrigObj_l1iso[i];
+    TrigObj_l1charge[i];
+    TrigObj_filterBits[i];
+  }
 
   //Flags
   *Flag_HBHENoiseFilter;
@@ -201,7 +331,7 @@ void AnaScript::ReadBranch(){
     Electron_dr03HcalDepth1TowerSumEt[i];
     Electron_dr03TkSumPt[i];
     Electron_dr03TkSumPtHEEP[i];
-    //Electron_eCorr[i];
+    //Electron_eCorr[i]; //Run2only
     Electron_eInvMinusPInv[i];
     Electron_energyErr[i];
     Electron_eta[i];
@@ -212,8 +342,8 @@ void AnaScript::ReadBranch(){
     Electron_mass[i];
     Electron_miniPFRelIso_all[i];
     Electron_miniPFRelIso_chg[i];
-    //Electron_mvaFall17V2Iso[i];
-    //Electron_mvaFall17V2noIso[i];
+    //Electron_mvaFall17V2Iso[i]; //Run2only
+    //Electron_mvaFall17V2noIso[i]; //Run2only
     Electron_pfRelIso03_all[i];
     Electron_pfRelIso03_chg[i];
     Electron_phi[i];
@@ -234,19 +364,19 @@ void AnaScript::ReadBranch(){
     Electron_convVeto[i];
     Electron_cutBased_HEEP[i];
     Electron_isPFcand[i];
-    //Electron_lostHits[i];
-    //Electron_mvaFall17V2Iso_WP80[i];
-    //Electron_mvaFall17V2Iso_WP90[i];
-    //Electron_mvaFall17V2Iso_WPL[i];
-    //Electron_mvaFall17V2noIso_WP80[i];
-    //Electron_mvaFall17V2noIso_WP90[i];
-    //Electron_mvaFall17V2noIso_WPL[i];
+    //Electron_lostHits[i]; //Run2only
+    //Electron_mvaFall17V2Iso_WP80[i]; //Run2only
+    //Electron_mvaFall17V2Iso_WP90[i]; //Run2only
+    //Electron_mvaFall17V2Iso_WPL[i]; //Run2only
+    //Electron_mvaFall17V2noIso_WP80[i]; //Run2only
+    //Electron_mvaFall17V2noIso_WP90[i]; //Run2only
+    //Electron_mvaFall17V2noIso_WPL[i]; //Run2only
     Electron_seedGain[i];
-    // Electron_dEscaleDown[i];
-    // Electron_dEscaleUp[i];
-    // Electron_dEsigmaDown[i];
-    // Electron_dEsigmaUp[i];
-    // Electron_jetNDauCharged[i]
+    // Electron_dEscaleDown[i]; //Run2only
+    // Electron_dEscaleUp[i]; //Run2only
+    // Electron_dEsigmaDown[i]; //Run2only
+    // Electron_dEsigmaUp[i]; //Run2only
+    // Electron_jetNDauCharged[i] //Run2only
   }
 
   //Muon Branches
@@ -272,7 +402,7 @@ void AnaScript::ReadBranch(){
     Muon_ptErr[i];
     Muon_segmentComp[i];
     Muon_sip3d[i];
-    //Muon_softMva[i];
+    //Muon_softMva[i]; //Run2only
     Muon_tkRelIso[i];
     Muon_tunepRelPt[i];
     Muon_mvaLowPt[i];
@@ -289,18 +419,18 @@ void AnaScript::ReadBranch(){
     Muon_inTimeMuon[i];
     Muon_isGlobal[i];
     Muon_isPFcand[i];
-    //Muon_isStandalone[i];
+    //Muon_isStandalone[i]; //Run2only
     Muon_isTracker[i];
-    //Muon_jetNDauCharged[i];
+    //Muon_jetNDauCharged[i]; //Run2only
     Muon_looseId[i];
     Muon_mediumId[i];
     Muon_mediumPromptId[i];
     Muon_miniIsoId[i];
     Muon_multiIsoId[i];
-    //Muon_mvaId[i];
-    //Muon_mvaLowPtId[i];
+    //Muon_mvaId[i]; //Run2only
+    //Muon_mvaLowPtId[i]; //Run2only
     Muon_pfIsoId[i];
-    //Muon_puppiIsoId[i];
+    //Muon_puppiIsoId[i]; //Run2only
     Muon_softId[i];
     Muon_softMvaId[i];
     Muon_tightId[i];
@@ -312,20 +442,20 @@ void AnaScript::ReadBranch(){
   *nJet;
   for(unsigned int i=0; i<(unsigned int)*nJet;i++){
     Jet_area[i];
-    //Jet_btagCSVV2[i];
-    //Jet_btagDeepB[i];
-    //Jet_btagDeepCvB[i];
-    //Jet_btagDeepCvL[i];
+    //Jet_btagCSVV2[i]; //Run2only
+    //Jet_btagDeepB[i]; //Run2only
+    //Jet_btagDeepCvB[i]; //Run2only
+    //Jet_btagDeepCvL[i]; //Run2only
     Jet_btagDeepFlavB[i];
-    //Jet_btagDeepFlavCvB[i];
-    //Jet_btagDeepFlavCvL[i];
-    //Jet_btagDeepFlavQG[i];
+    //Jet_btagDeepFlavCvB[i]; //Run2only
+    //Jet_btagDeepFlavCvL[i]; //Run2only
+    //Jet_btagDeepFlavQG[i]; //Run2only
     Jet_chEmEF[i];
-    //Jet_chFPV0EF[i];
+    //Jet_chFPV0EF[i]; //Run2only
     Jet_chHEF[i];
     Jet_eta[i];
-    //Jet_hfsigmaEtaEta[i];
-    //Jet_hfsigmaPhiPhi[i];
+    //Jet_hfsigmaEtaEta[i]; //Run2only
+    //Jet_hfsigmaPhiPhi[i]; //Run2only
     Jet_mass[i];
     Jet_muEF[i];
     Jet_muonSubtrFactor[i];
@@ -333,54 +463,53 @@ void AnaScript::ReadBranch(){
     Jet_neHEF[i];
     Jet_phi[i];
     Jet_pt[i];
-    //Jet_puIdDisc[i];
-    //Jet_qgl[i];
-    //Jet_rawFactor[i];
-    //Jet_bRegCorr[i];
-    //Jet_bRegRes[i];
-    //Jet_cRegCorr[i];
-    //Jet_cRegRes[i];
+    //Jet_puIdDisc[i]; //Run2only
+    //Jet_qgl[i]; //Run2only
+    //Jet_rawFactor[i]; //Run2only
+    //Jet_bRegCorr[i]; //Run2only
+    //Jet_bRegRes[i]; //Run2only
+    //Jet_cRegCorr[i]; //Run2only
+    //Jet_cRegRes[i]; //Run2only
     Jet_electronIdx1[i];
     Jet_electronIdx2[i];
-    //Jet_hfadjacentEtaStripsSize[i];
-    //Jet_hfcentralEtaStripSize[i];
+    //Jet_hfadjacentEtaStripsSize[i]; //Run2only
+    //Jet_hfcentralEtaStripSize[i]; //Run2only
     Jet_jetId[i];
     Jet_muonIdx1[i];
     Jet_muonIdx2[i];
     Jet_nElectrons[i];
     Jet_nMuons[i];
-    //Jet_puId[i];
-    //Jet_nConstituents[i];
+    //Jet_puId[i]; //Run2only
+    //Jet_nConstituents[i]; //Run2only
     if(_data==0) Jet_hadronFlavour[i]; //Important for b-tagging corrections, gen-only. Use it in the main code.
   }
 
-  /*
   //Photons:
   *nPhoton;
   for(unsigned int i=0; i<(unsigned int)*nPhoton;i++){
-    //Photon_dEscaleDown[i];
-    //Photon_dEscaleUp[i];
-    //Photon_dEsigmaDown[i];
-    //Photon_dEsigmaUp[i];
-    //Photon_eCorr[i];
+    //Photon_dEscaleDown[i]; //Run2only
+    //Photon_dEscaleUp[i]; //Run2only
+    //Photon_dEsigmaDown[i]; //Run2only
+    //Photon_dEsigmaUp[i]; //Run2only
+    //Photon_eCorr[i]; //Run2only
     Photon_energyErr[i];
     Photon_eta[i];
     Photon_hoe[i];
-    //Photon_mass[i];
+    //Photon_mass[i]; //Run2only
     Photon_mvaID[i];
-    //Photon_mvaID_Fall17V1p1[i];
+    //Photon_mvaID_Fall17V1p1[i]; //Run2only
     Photon_pfRelIso03_all[i];
     Photon_pfRelIso03_chg[i];
     Photon_phi[i];
     Photon_pt[i];
     Photon_r9[i];
     Photon_sieie[i];
-    //Photon_charge[i];
+    //Photon_charge[i]; //Run2only
     Photon_cutBased[i];
-    //Photon_cutBased_Fall17V1Bitmap[i];
+    //Photon_cutBased_Fall17V1Bitmap[i];  //Run2only
     Photon_electronIdx[i];
     Photon_jetIdx[i];
-    // Photon_pdgId[i];
+    // Photon_pdgId[i]; //Run2only
     Photon_vidNestedWPBitmap[i];
     Photon_electronVeto[i];
     Photon_isScEtaEB[i];
@@ -389,6 +518,6 @@ void AnaScript::ReadBranch(){
     Photon_mvaID_WP90[i];
     Photon_pixelSeed[i];
     Photon_seedGain[i];
-    }*/
+  }
   
 }
