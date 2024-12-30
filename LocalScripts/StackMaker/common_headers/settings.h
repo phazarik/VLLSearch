@@ -97,6 +97,9 @@ TH1F *get_hist(
   SetLastBinAsOverflow(hst);
   hst->Rebin(rebin);
 
+  //Global scaling:
+  if(sample == "QCD_MuEnriched" || sample == "QCD_EMEnriched") hst->Scale(QCDscale);
+
   return hst;
 }
 

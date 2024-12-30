@@ -35,18 +35,19 @@ TString tag1, tag2, tag3, info;
 void plot(TString var, TString name);
 
 //main:
-void makePlotForCMS(TString _var = "STfrac", TString _name = "STfrac (GeV)", int _nbins = 200, float _xmin = 0.0, float _xmax = 1000, int _rebin = 1){
+void makePlotForCMS(TString _var = "HT", TString _name = "HT (GeV)", int _nbins = 200, float _xmin = 0.0, float _xmax = 1000, int _rebin = 1){
+//void makePlotForCMS(TString _var = "njet", TString _name = "nJet", int _nbins = 10, float _xmin = 0.0, float _xmax = 10, int _rebin = 1){
   
   //Set global parameters:
   channel = "mm";
   campaign = "2018_UL";
-  toSave = false;
-  toOverlayData = true;
+  toSave = true;
+  toOverlayData = false;
 
-  TString jobname = "hist_2018UL_baseline_Dec18_"+channel;
+  TString jobname = "hist_2018UL_sr_Dec30_"+channel;
   input_path = "../input_files/hists/"+jobname;
-  tag1 = campaign+"_test_"+channel; //folder name
-  info = "test"; //Event selection
+  tag1 = campaign+"_SR_"+channel; //folder name
+  info = "SR"; //Event selection
   tag3 = ""; //Additional info
   rebin = _rebin;
   
@@ -66,7 +67,7 @@ void makePlotForCMS(TString _var = "STfrac", TString _name = "STfrac (GeV)", int
 void plot(TString var, TString name){
 
   Double_t ymin = 0.1;
-  Double_t ymax = 10E8;
+  Double_t ymax = 10E6;
 
   TString date_stamp  = todays_date();
   TString dump_folder = "plots/"+date_stamp+"_"+tag1;
@@ -309,7 +310,7 @@ void plot(TString var, TString name){
 
 
   // Yield for each background:
-  if(var=="_dilep_mass"){
+  if(var=="HT"){
     DisplayText("\nYields with uncertainty for each sample:", 33);
     cout<<fixed<<setprecision(2);
     Double_t sum_bkg = 0; Double_t sum_bkg_sqerr = 0;
@@ -325,6 +326,24 @@ void plot(TString var, TString name){
     if(sig3) cout<<setw(15)<<left<<sig3->GetTitle()<<"\t"<<sig3->Integral()<<"\\pm"<<GetStatUncertainty(sig3)<<endl;
     if(toOverlayData) cout<<setw(15)<<left<<"\nData\t"<<right<<hst_data->Integral()<<"\\pm"<<GetStatUncertainty(hst_data)<<endl;
     cout<<defaultfloat<<endl;
+    /*
+    //QCD scale-factor:
+    Double_t qcd_yield = 0;
+    Double_t other_yield = 0;
+    for(int i=(int)bkg.size()-1; i>=0; i--){
+      if((TString)bkg[i]->GetName()=="QCD") qcd_yield    = bkg[i]->Integral();
+      else                                  other_yield += bkg[i]->Integral();
+    }
+    Double_t data_yield = hst_data->Integral();
+    Double_t QCD_sf =  (data_yield-other_yield)/qcd_yield;
+    cout<<fixed<<setprecision(2);
+    DisplayText("QCD scale factor calculation:", 33);
+    cout<<"Data      = "<<data_yield<<endl;
+    cout<<"QCD       = "<<qcd_yield <<endl;
+    cout<<"Other bkg = "<<other_yield <<endl;
+    cout<<fixed<<setprecision(8);
+    cout<<"QCD scale factor (data-others/QCD) = \033[33m"<<QCD_sf<<"\033[0m"<<endl;
+    cout<<defaultfloat<<endl;*/
   }
 
   //______________________________________________________________

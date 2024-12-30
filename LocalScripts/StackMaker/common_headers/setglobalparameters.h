@@ -44,6 +44,7 @@ void InitializeValues(){
   }
   else if(campaign == "2018_UL"){
     campaign_name = "59.8 fb^{-1} (2018)";
+    if(channel=="mm") QCDscale = 0.14227960;
     /*
     if(channel == "mm")      QCDscale = 0.141906;
     else if(channel == "me") QCDscale = 0.078759;

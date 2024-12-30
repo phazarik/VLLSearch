@@ -160,7 +160,7 @@ void processTree(
     //--------------------------------
 
     wt = wt*wt_leptonSF*wt_trig*wt_pileup; //Object corrections
-    //wt = wt*wt_bjet;             //Adding b-tagging corrections
+    wt = wt*wt_bjet;             //Adding b-tagging corrections
 
     event_selection = channel_selection;
     
