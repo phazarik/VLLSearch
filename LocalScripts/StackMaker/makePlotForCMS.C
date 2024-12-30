@@ -230,7 +230,7 @@ void plot(TString var, TString name){
     merge_and_decorate(WGamma,"W#gamma",   kGray+1),
     //VV and VVV: more V: darker green
     merge_and_decorate(VV,    "VV",        kGreen+1),
-    merge_and_decorate(WpWp,  "WpWp",      kGreen-5), //weird one
+    merge_and_decorate(WpWp,  "WpWp",      kGreen-5),
     merge_and_decorate(VVV,   "VVV",       kGreen+3),
     //Higgs:
     merge_and_decorate(Higgs, "Higgs",     kMagenta),
