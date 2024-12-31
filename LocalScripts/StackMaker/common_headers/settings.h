@@ -400,4 +400,57 @@ void DisplayYieldsInBins(TH1F *hst){
   cout << defaultfloat << endl;
 }
 
+void GetBinwiseSF(TString var, TH1F *hst_data, vector<TH1F*>bkg, TString targetname){
+
+  //Find the target histogram:
+  TH1F *hst_target;
+  for(int i=0; i<(int)bkg.size(); i++){
+    if(bkg[i]->GetName() == (TString)targetname){
+      hst_target = bkg[i];
+      DisplayText("Calculating scale-factors for "+string(bkg[i]->GetName()), 33);
+      //cout<<"Calculating scale-factors for "<<bkg[i]->GetName()<<endl;
+      break;
+    }
+  }
+  
+  //DisplayText("\nScaleFactors in each "+var+"  bin:", 33);
+  cout<<"bin\tnData\tnTarget\tnOthers\tScaleFactor\tbin-range"<<endl;
+
+  //For each bin:
+  for(int bin=0; bin<(int)hst_target->GetNbinsX(); bin++){
+    float ndata   = hst_data->GetBinContent(bin+1);
+    float ntarget = hst_target ->GetBinContent(bin+1);
+    float nothers = 0;
+    float binxlow = hst_data->GetXaxis()->GetBinLowEdge(bin+1);
+    float binxup  = hst_data->GetXaxis()->GetBinUpEdge(bin+1);
+    for(int i=0; i<(int)bkg.size(); i++){
+      if(bkg[i]->GetTitle() == (TString)targetname) continue;
+      else nothers = nothers + bkg[i]->GetBinContent(bin+1);
+    }
+    float sf_bin = 0; if(ntarget !=0) sf_bin = (ndata-nothers)/ntarget;
+      
+    cout<<bin+1<<"\t"<<(int)ndata<<"\t"<<(int)ntarget<<"\t"<<(int)nothers<<"\t";
+    cout<<fixed<<setprecision(7)<<sf_bin<<defaultfloat<<"\t";
+    cout<<binxlow<<"-"<<binxup<<endl;
+      
+  }
+
+  float nothers_total = 0;
+  for(int i=0; i<(int)bkg.size(); i++){
+    if(bkg[i]->GetTitle() == (TString)targetname) continue;
+    else nothers_total = nothers_total + bkg[i]->Integral();
+  }
+  
+  //Global:
+  float globalsf = 0;
+  if(hst_target->Integral()!=0) globalsf = (hst_data->Integral()-nothers_total)/hst_target->Integral();
+  
+  cout<<"Global\t";
+  cout<<(int)hst_data   ->Integral()<<"\t";
+  cout<<(int)hst_target ->Integral()<<"\t";
+  cout<<(int)nothers_total<<"\t";
+  cout<<fixed<<setprecision(7)<<globalsf<<defaultfloat<<"\t";
+  cout<<"all\n"<<endl;
+}
+
 #endif // SETTINGS_H

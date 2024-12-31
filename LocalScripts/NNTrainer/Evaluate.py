@@ -11,9 +11,9 @@ from keras import layers
 #from tensorflow.keras.layers import Dense
 
 #Global parameters:
-jobname = 'tree_2018UL_baseline_Dec30'
+jobname = 'tree_2017UL_baseline_Dec31'
 indir = '../input_files/trees'
-outdir = f'../input_files/trees_modified/tree_2018UL_baseline_Dec30'
+outdir = f'../input_files/trees_modified/tree_2017UL_baseline_Dec31'
 os.makedirs(outdir, exist_ok=True)
 
 modeldict = {

@@ -155,20 +155,69 @@ void processTree(
 
     Double_t wt = 1.0;
 
+    wt = wt*wt_leptonSF*wt_trig*wt_pileup; //Object corrections
+    //wt = wt*wt_bjet;             //Adding b-tagging corrections
+
+
     //--------------------------------
     // Corrections to the histograms:
     //--------------------------------
+    std::string filename(inputFilename);
+    std::string baseFilename = filename.substr(filename.find_last_of("/\\") + 1);
+    
+    // 1) Global QCD scaling:
+    bool correct_QCD = (baseFilename.find("QCD") != std::string::npos) && (baseFilename.find("Enriched") != std::string::npos);
+    Double_t scale_qcd = 1.0;
+    if(correct_QCD){
+      if(string(campaign) == "2018_UL"){
+	if (channelval == 0)      scale_qcd = 0.12970339;
+	else if (channelval == 1) scale_qcd = 1.0;
+	else if (channelval == 2) scale_qcd = 1.0;
+	else if (channelval == 3) scale_qcd = 1.0;
+      }
+      else if(string(campaign) == "2017_UL"){
+	if (channelval == 0)      scale_qcd = 0.11850897;
+	else if (channelval == 1) scale_qcd = 1.0;
+	else if (channelval == 2) scale_qcd = 1.0;
+	else if (channelval == 3) scale_qcd = 1.0;
+      }
+    }
+    wt = wt * scale_qcd;
+    
+    // 2) TTbar HT binned scaling:
+    bool correct_ttbar = baseFilename.find("TTBar") != std::string::npos;
+    Double_t scale_ttbar = 1.0;
+    if(correct_ttbar){
 
-    wt = wt*wt_leptonSF*wt_trig*wt_pileup; //Object corrections
-    wt = wt*wt_bjet;             //Adding b-tagging corrections
+      if(string(campaign) == "2018_UL"){
+	if (channelval == 0){
+	  if     ( 50 <= HT && HT < 100) scale_ttbar = 0.9954508;
+	  else if(100 <= HT && HT < 200) scale_ttbar = 0.8757868;
+	  else if(200 <= HT && HT < 300) scale_ttbar = 0.8440915;
+	  else if(300 <= HT && HT < 400) scale_ttbar = 0.8116289;
+	  else if(400 <= HT)             scale_ttbar = 0.7447911;
+	}//mu-mu
+      }//2018
 
-    event_selection = channel_selection;
+      else if(string(campaign) == "2017_UL"){
+	if (channelval == 0){
+	  if     ( 50 <= HT && HT < 100) scale_ttbar = 0.9233149;
+	  else if(100 <= HT && HT < 200) scale_ttbar = 0.9437011;
+	  else if(200 <= HT && HT < 300) scale_ttbar = 1.0297058;
+	  else if(300 <= HT && HT < 400) scale_ttbar = 0.9599918;
+	  else if(400 <= HT)             scale_ttbar = 0.7198559;
+	}//mu-mu
+      }//2017
+
+    }
+    wt = wt * scale_ttbar;
     
     //--------------------------------
     // Filling up the histograms:
-    //--------------------------------
-
     // Caution: Careful with the order of the variables and size of hist_collection!
+    //--------------------------------
+    
+    event_selection = channel_selection;
     if(event_selection){
       // integers:
       hst_collection[0] ->Fill(channel, 1.0);

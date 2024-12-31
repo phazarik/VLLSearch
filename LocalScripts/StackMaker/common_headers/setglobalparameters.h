@@ -28,38 +28,19 @@ void InitializeValues(){
   campaign_name = "";
 
   //Custom settings/global-scaling for each campaign:
-  if(campaign == "2016preVFP_UL"){
-    campaign_name = "19.7 fb^{-1} (2016-preVFP)";
-    /*
-    if(channel == "mm")      QCDscale = 0.114030;
-    else if(channel == "me") QCDscale = 0.171091;
-    else if(channel == "em") QCDscale = 0.059742;
-    else if(channel == "ee") QCDscale = 0.059742;*/
-  }
-  else if(campaign == "2016postVFP_UL"){
-    campaign_name = "16.2 fb^{-1} (2016-postVFP)";
-  }
-  else if(campaign == "2017_UL"){
-    campaign_name = "41.5 fb^{-1} (2017)";
-  }
-  else if(campaign == "2018_UL"){
-    campaign_name = "59.8 fb^{-1} (2018)";
-    if(channel=="mm") QCDscale = 0.14227960;
-    /*
-    if(channel == "mm")      QCDscale = 0.141906;
-    else if(channel == "me") QCDscale = 0.078759;
-    else if(channel == "em") QCDscale = 0.187960;
-    else if(channel == "ee") QCDscale = 0.407880;
-    }*/
+  if(campaign == "2016preVFP_UL")       campaign_name = "19.7 fb^{-1} (2016-preVFP)";
+  else if(campaign == "2016postVFP_UL") campaign_name = "16.2 fb^{-1} (2016-postVFP)";
+  else if(campaign == "2017_UL")        campaign_name = "41.5 fb^{-1} (2017)";
+  else if(campaign == "2018_UL")        campaign_name = "59.8 fb^{-1} (2018)";
 
-  //Names:
+  //Channel names:
   if     (channel == "ee") tag2 = info+" (ee)";
   else if(channel == "em") tag2 = info+" (e#mu)";
   else if(channel == "me") tag2 = info+" (#mue)";
   else if(channel == "mm") tag2 = info+" (#mu#mu)";
   else cout<<"\033[31mGlobal: Please provide correct channel name!\033[0m"<<endl;
-  }
 }
+
 
   /*
 void loadLuminosityData(string jsonfilepath) {
