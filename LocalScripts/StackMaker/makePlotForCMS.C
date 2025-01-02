@@ -41,10 +41,10 @@ void makePlotForCMS(TString _var = "HT", TString _name = "HT (GeV)", int _nbins 
   //Set global parameters:
   channel = "mm";
   campaign = "2018_UL";
-  toSave = true;
+  toSave = false;
   toOverlayData = true;
 
-  TString jobname = "hist_2018UL_topcr_Dec31_"+channel;
+  TString jobname = "hist_test_"+channel;
   input_path = "../input_files/hists/"+jobname;
   tag1 = campaign+"_topcr_"+channel; //folder name
   info = "t#bar{t} CR"; //Event selection
@@ -196,6 +196,8 @@ void plot(TString var, TString name){
     get_hist(var, "SingleMuon", "SingleMuon_D"),
     get_hist(var, "SingleMuon", "SingleMuon_E"),
     get_hist(var, "SingleMuon", "SingleMuon_F"),
+    get_hist(var, "SingleMuon", "SingleMuon_G"),
+    get_hist(var, "SingleMuon", "SingleMuon_H"),
   };
   vector<TH1F *>EGamma={
     get_hist(var, "EGamma", "EGamma_A"),
@@ -204,6 +206,8 @@ void plot(TString var, TString name){
     get_hist(var, "EGamma", "EGamma_D"),
     get_hist(var, "EGamma", "EGamma_E"),
     get_hist(var, "EGamma", "EGamma_F"),
+    get_hist(var, "EGamma", "EGamma_G"),
+    get_hist(var, "EGamma", "EGamma_H"),
   };
   cout<<"Histograms loaded."<<endl;
 
@@ -327,7 +331,6 @@ void plot(TString var, TString name){
     if(toOverlayData) cout<<setw(15)<<left<<"\nData\t"<<right<<hst_data->Integral()<<"\\pm"<<GetStatUncertainty(hst_data)<<endl;
     cout<<defaultfloat<<endl;
 
-    /*
     //QCD scale-factor:
     Double_t qcd_yield = 0;
     Double_t other_yield = 0;
@@ -344,7 +347,7 @@ void plot(TString var, TString name){
     cout<<"Other bkg = "<<other_yield <<endl;
     cout<<fixed<<setprecision(8);
     cout<<"QCD scale factor (data-others/QCD) = \033[33m"<<QCD_sf<<"\033[0m"<<endl;
-    cout<<defaultfloat<<endl;*/
+    cout<<defaultfloat<<endl;
 
     GetBinwiseSF(var, hst_data, bkg, "t#bar{t}");
   }
@@ -487,9 +490,10 @@ void plot(TString var, TString name){
 
   put_text("CMS", 0.17, 0.83, 62, 0.07);          // Larger, bold CMS label
   put_text("Preliminary", 0.27, 0.83, 52, 0.05);  // Smaller preliminary label
-  if(campaign == "2016preVFP_UL") put_latex_text(campaign_name, 0.62, 0.94, 42, 0.05);
-  if(campaign == "2017_UL")       put_latex_text(campaign_name, 0.74, 0.94, 42, 0.05);
-  if(campaign == "2018_UL")       put_latex_text(campaign_name, 0.74, 0.94, 42, 0.05);
+  if(campaign == "2016preVFP_UL")  put_latex_text(campaign_name, 0.62, 0.94, 42, 0.05);
+  if(campaign == "2016postVFP_UL") put_latex_text(campaign_name, 0.60, 0.94, 42, 0.05);
+  if(campaign == "2017_UL")        put_latex_text(campaign_name, 0.74, 0.94, 42, 0.05);
+  if(campaign == "2018_UL")        put_latex_text(campaign_name, 0.74, 0.94, 42, 0.05);
   put_latex_text(tag2, 0.17, 0.78, 42, 0.04);     //Additional information
   put_latex_text(tag3, 0.17, 0.73, 42, 0.04);     //Additional information
 
