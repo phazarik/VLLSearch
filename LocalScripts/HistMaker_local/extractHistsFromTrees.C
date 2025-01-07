@@ -51,10 +51,10 @@ map<string, map<string, float>> loadJson(const string &filename) {
 }
 
 void extractHistsFromTrees(
-			   const std::string& jobname  = "tree_2016preVFPUL_baseline_Jan02",
-			   const std::string& dump     = "hist_2016preVFPUL_baseline_Jan02_mm",
-			   const std::string& campaign = "2016preVFP_UL",
-			   const std::string& channel  = "mm",
+			   const std::string& jobname  = "topcr/tree_2016postVFPUL_topvr",
+			   const std::string& dump     = "hist_2016postVFPUL_topcr_unscaled_Jan07_em",
+			   const std::string& campaign = "2016postVFP_UL",
+			   const std::string& channel  = "em",
 			   bool test   = false,
 			   bool dryrun = false)
 {

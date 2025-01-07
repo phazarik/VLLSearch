@@ -42,13 +42,13 @@ void writeYields(){
   
   //Set global parameters:
   channel = "mm";
-  campaign = "2018_UL";
+  campaign = "2016postVFP_UL";
   toSave = true;
   toOverlayData = false;
   
-  TString jobname = "hist_2018UL_sr_Dec30_"+channel;
+  TString jobname = "hist_2016postVFPUL_sr_Jan03_"+channel;
   TString dump_folder = "signalyields/"+jobname;
-  TString var = "dilep_mt";
+  TString var = "dilep_pt";
   rebin = 1;
   
   //Don't touch below:

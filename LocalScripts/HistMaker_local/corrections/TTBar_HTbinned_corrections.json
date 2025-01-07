@@ -1,38 +1,122 @@
 {
-  "2018_UL": {
-    "0": [
-      { "low": 50,  "high": 100,   "scale": 0.9954508 },
-      { "low": 100, "high": 200,   "scale": 0.8757868 },
-      { "low": 200, "high": 300,   "scale": 0.8440915 },
-      { "low": 300, "high": 400,   "scale": 0.8116289 },
-      { "low": 400, "high": "inf", "scale": 0.7447911 }
-    ]
-  },
-  "2017_UL": {
-    "0": [
-      { "low": 50,  "high": 100,   "scale": 0.9233149 },
-      { "low": 100, "high": 200,   "scale": 0.9437011 },
-      { "low": 200, "high": 300,   "scale": 1.0297058 },
-      { "low": 300, "high": 400,   "scale": 0.9599918 },
-      { "low": 400, "high": "inf", "scale": 0.7198559 }
-    ]
-  },
-  "2016postVFP_UL": {
-    "0": [
-      { "low": 50,  "high": 100,   "scale": 0.6570610 },
-      { "low": 100, "high": 200,   "scale": 0.5399727 },
-      { "low": 200, "high": 300,   "scale": 0.7789811 },
-      { "low": 300, "high": 400,   "scale": 1.0687726 },
-      { "low": 400, "high": "inf", "scale": 0.8332814 }
-    ]
-  },
-  "2016preVFP_UL": {
-    "0": [
-      { "low": 50,  "high": 100,   "scale": 0.6033705 },
-      { "low": 100, "high": 200,   "scale": 0.5077187 },
-      { "low": 200, "high": 300,   "scale": 0.3289767 },
-      { "low": 300, "high": 400,   "scale": 1.1711271 },
-      { "low": 400, "high": "inf", "scale": 0.3691475 }
-    ]
-  }
+    "2018_UL": {
+	"0": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	],
+	"1": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	],
+	"2": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	],
+	"3": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	]
+    },
+    "2017_UL": {
+	"0": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	],
+	"1": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	],
+	"2": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	],
+	"3": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	]
+    },
+    "2016postVFP_UL": {
+	"0": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	],
+	"1": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	],
+	"2": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	],
+	"3": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	]
+    },
+    "2016preVFP_UL": {
+	"0": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	],
+	"1": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	],
+	"2": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	],
+	"3": [
+	    { "low": 50,  "high": 100,   "scale": 1.0 },
+	    { "low": 100, "high": 200,   "scale": 1.0 },
+	    { "low": 200, "high": 300,   "scale": 1.0 },
+	    { "low": 300, "high": 400,   "scale": 1.0 },
+	    { "low": 400, "high": "inf", "scale": 1.0 }
+	]
+    }
 }

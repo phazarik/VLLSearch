@@ -39,14 +39,14 @@ void makePlotForCMS(TString _var = "HT", TString _name = "HT (GeV)", int _nbins 
 //void makePlotForCMS(TString _var = "njet", TString _name = "nJet", int _nbins = 10, float _xmin = 0.0, float _xmax = 10, int _rebin = 1){
   
   //Set global parameters:
-  channel = "mm";
-  campaign = "2018_UL";
-  toSave = false;
+  channel = "em";
+  campaign = "2016postVFP_UL";
+  toSave = true;
   toOverlayData = true;
 
-  TString jobname = "hist_test_"+channel;
+  TString jobname = "hist_2016postVFPUL_topcr_unscaled_Jan07_"+channel;
   input_path = "../input_files/hists/"+jobname;
-  tag1 = campaign+"_topcr_"+channel; //folder name
+  tag1 = "topcr_unscaled_"+campaign+"_"+channel; //folder name
   info = "t#bar{t} CR"; //Event selection
   tag3 = ""; //Additional info
   rebin = _rebin;
@@ -445,7 +445,8 @@ void plot(TString var, TString name){
     //-----------------------------
     // Special corrections in bins:
     //-----------------------------
-    
+
+    /*
     if(var == "LT"){
       TH1F* data_minus_bkg = (TH1F *)hst_data->Clone();
       for(int i=0; i<(int)bkg.size(); i++){
@@ -461,11 +462,12 @@ void plot(TString var, TString name){
 	}
       }
     }//Special
+    */
     
     //Drawing everything in the proper order:
     SetRatioStyle(ratiohist, name);
     ratiohist->GetYaxis()->SetTitle("obs/exp");
-    if(var == "LT") ratiohist->GetYaxis()->SetTitle("SF");
+    //if(var == "LT") ratiohist->GetYaxis()->SetTitle("SF");
     ratiohist->GetYaxis()->SetTitleSize(0.15);
     ratiohist->GetYaxis()->SetTitleOffset(0.43);
     ratiohist->GetYaxis()->SetLabelSize(0.13);

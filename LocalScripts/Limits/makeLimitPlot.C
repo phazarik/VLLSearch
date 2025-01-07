@@ -38,12 +38,12 @@ TCanvas* CreateCanvas();
 //          Main
 //##########################
 void makeLimitPlot(
-		   TString filename="sigmaB_limits_VLLD_mu_2018UL_test.txt",
+		   TString filename="sigmaB_limits_VLLD_mu_2018and2017_Jan03.txt",
 		   TString modelname="VLLD-#mu",
-		   TString campaign="2018_UL",
+		   TString campaign="2017+2018",
 		   TString channel="#mu#mu channel",
-		   TString outfile="demo_limit_VLLDmu_2018UL_test_mm.png",
-		   float ymin=10e-3,
+		   TString outfile="limit_VLLDmu_2017to18_mm.png",
+		   float ymin=10e-4,
 		   float ymax=10e2
 		   )
 {   
@@ -190,9 +190,12 @@ void AddCMSLabel(TCanvas* canvas, TString campaign, TString channel) {
   latex.SetTextFont(42);
 
   latex.SetTextSize(0.04);
-  if(     string(campaign) == "Run2_UL")       latex.DrawLatex(0.72, 0.96, "137 fb^{-1} (13 TeV)");
-  else if(string(campaign) == "2018_UL")       latex.DrawLatex(0.74, 0.96, "59.8 fb^{-1} (2018)");
-  else if(string(campaign) == "2016preVFP_UL") latex.DrawLatex(0.61, 0.96, "19.7 fb^{-1} (2016-preVFP)");
+  if(     string(campaign) == "Run2_UL")        latex.DrawLatex(0.72, 0.96, "137 fb^{-1} (13 TeV)");
+  else if(string(campaign) == "2018_UL")        latex.DrawLatex(0.74, 0.96, "59.8 fb^{-1} (2018)");
+  else if(string(campaign) == "2017_UL")        latex.DrawLatex(0.74, 0.96, "41.5 fb^{-1} (2017)");
+  else if(string(campaign) == "2016postVFP_UL") latex.DrawLatex(0.60, 0.96, "16.2 fb^{-1} (2016-postVFP)");
+  else if(string(campaign) == "2016preVFP_UL")  latex.DrawLatex(0.62, 0.96, "19.7 fb^{-1} (2016-preVFP)");
+  else if(string(campaign) == "2017+2018")      latex.DrawLatex(0.62, 0.96, "101.3 fb^{-1} (2017+2018)");
   latex.DrawLatex(0.17, 0.81, "Asymptotic. Stat only");
   latex.DrawLatex(0.17, 0.76, channel);
 }

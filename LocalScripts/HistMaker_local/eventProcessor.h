@@ -191,9 +191,9 @@ void processTree(
 
     Double_t wt = 1.0;
 
+    if((string)campaign == "2016preVFP_UL" || (string)campaign == "2016postVFP_UL") wt_pileup = 1.0;
     wt = wt*wt_leptonSF*wt_trig*wt_pileup; //Object corrections
-    //wt = wt*wt_bjet;             //Adding b-tagging corrections
-
+    wt = wt*wt_bjet;             //Adding b-tagging corrections
 
     //--------------------------------
     // Corrections to the histograms:
