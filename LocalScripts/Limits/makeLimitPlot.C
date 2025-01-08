@@ -47,7 +47,7 @@ void makeLimitPlot(
 		   float ymax=10e2
 		   )
 {   
-  vector<LimitData> limits = ReadDataFromFile("sigmaBlimits/"+filename);
+  vector<LimitData> limits = ReadDataFromFile(filename);
   int nPoints = limits.size();
   if (limits.empty()) return;
 

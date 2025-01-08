@@ -1,16 +1,18 @@
 import os
 import numpy as np
+from datetime import datetime
+today = datetime.now().strftime("%Y-%m-%d")
 
 # Define your cross-section limits and sample details
 sigdict = {
     'VLLD_ele': {
-        'M100': {'mass': 100, 'xsec': 16.9, 'ngen': 110871, 'scale': 1},
+        'M100': {'mass': 100, 'xsec': 16.9, 'ngen': 110871, 'scale': 10},
         'M200': {'mass': 200, 'xsec': 1.36, 'ngen': 73730, 'scale': 1},
         'M300': {'mass': 300, 'xsec': 0.291, 'ngen': 24753, 'scale': 1},
         'M400': {'mass': 400, 'xsec': 0.0907, 'ngen': 24491, 'scale': 1},
         'M600': {'mass': 600, 'xsec': 0.0149, 'ngen': 24611, 'scale': 1},
         'M800': {'mass': 800, 'xsec': 0.00347, 'ngen': 23680, 'scale': 1},
-        'M1000': {'mass': 1000, 'xsec': 0.000971, 'ngen': 24286, 'scale': 1}
+        #'M1000': {'mass': 1000, 'xsec': 0.000971, 'ngen': 24286, 'scale': 1}
     },
     'VLLD_mu': {
         'M100': {'mass': 100, 'xsec': 16.9, 'ngen': 111926, 'scale': 10},
@@ -23,9 +25,9 @@ sigdict = {
 }
 
 # Path for CMS-combine output files and the output directory for the sigma limits
-combine_output_path = 'fromCMScombine'
+combine_output_path = 'fromCMScombine/2025-01-08'
 files = os.listdir(combine_output_path)
-outdir = 'sigmaBlimits'
+outdir = 'sigmaBlimits/'+today
 os.makedirs(outdir, exist_ok=True)
 
 # Process each file in the directory

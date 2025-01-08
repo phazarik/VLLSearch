@@ -39,15 +39,15 @@ void makePlotForCMS(TString _var = "HT", TString _name = "HT (GeV)", int _nbins 
 //void makePlotForCMS(TString _var = "njet", TString _name = "nJet", int _nbins = 10, float _xmin = 0.0, float _xmax = 10, int _rebin = 1){
   
   //Set global parameters:
-  channel = "em";
-  campaign = "2016postVFP_UL";
+  channel = "mm";
+  campaign = "2018_UL";
   toSave = true;
   toOverlayData = true;
 
-  TString jobname = "hist_2016postVFPUL_topcr_unscaled_Jan07_"+channel;
+  TString jobname = "hist_2018UL_qcdvr_"+channel;
   input_path = "../input_files/hists/"+jobname;
-  tag1 = "topcr_unscaled_"+campaign+"_"+channel; //folder name
-  info = "t#bar{t} CR"; //Event selection
+  tag1 = "qcdvr_"+campaign+"_"+channel; //folder name
+  info = "QCD VR"; //Event selection
   tag3 = ""; //Additional info
   rebin = _rebin;
   
