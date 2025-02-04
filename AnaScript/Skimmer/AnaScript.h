@@ -440,16 +440,16 @@ class AnaScript : public TSelector {
   
   //Triggers I am using:
   //For 2016:
-  //TTreeReaderValue<Bool_t> HLT_SingleMuon = {fReader, "HLT_IsoMu24"};
-  //TTreeReaderValue<Bool_t> HLT_SingleEle  = {fReader, "HLT_Ele27_WPTight_Gsf"};
+  TTreeReaderValue<Bool_t> HLT_SingleMuon = {fReader, "HLT_IsoMu24"};
+  TTreeReaderValue<Bool_t> HLT_SingleEle  = {fReader, "HLT_Ele27_WPTight_Gsf"};
 
   //For 2017:
   //TTreeReaderValue<Bool_t> HLT_SingleMuon = {fReader, "HLT_IsoMu27"};
   //TTreeReaderValue<Bool_t> HLT_SingleEle  = {fReader, "HLT_Ele35_WPTight_Gsf"};
 
   //For 2018:
-  TTreeReaderValue<Bool_t> HLT_SingleMuon = {fReader, "HLT_IsoMu24"};
-  TTreeReaderValue<Bool_t> HLT_SingleEle  = {fReader, "HLT_Ele32_WPTight_Gsf"};
+  //TTreeReaderValue<Bool_t> HLT_SingleMuon = {fReader, "HLT_IsoMu24"};
+  //TTreeReaderValue<Bool_t> HLT_SingleEle  = {fReader, "HLT_Ele32_WPTight_Gsf"};
 
   /*
   //Additional triggers I am keeping:

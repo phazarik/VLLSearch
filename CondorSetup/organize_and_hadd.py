@@ -35,7 +35,7 @@ for folder in samples:
     if skimmed: prefix = 'skim'
     if trees:   prefix = 'tree'
 
-    name = folder.split('_2024')[0]
+    name = folder.split('_2025')[0]
 
     ### Corrections for names = {oldname:newname}
     corrections = {

@@ -26,7 +26,7 @@ toDebug = args.debug   ### For debugging the condor-script
 # Global settings
 #--------------------
 
-campaign = "2018_UL"  ### Options: 2016preVFP_UL, 2016postVFP_UL, 2017_UL, 2018_UL
+campaign = "2016preVFP_UL"  ### Options: 2016preVFP_UL, 2016postVFP_UL, 2017_UL, 2018_UL
 mode = "tree"                ### Options: 'hist', 'skim', 'tree'
 file_type = 'skimmed'         ### Options:  'normal', 'skimmed'
 
@@ -72,9 +72,9 @@ with open(jsonfile,'r') as infile: samplelist = json.load(infile)
 nanoAOD_path = None
 if file_type == 'skimmed' :
     if "2018" in campaign:          nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2018UL_baseline_Dec16"
-    elif "2017" in campaign:        nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2017UL_baseline_Dec04"
-    elif "2016preVFP"  in campaign: nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2016preVFPUL_baseline_Dec11"
-    elif "2016postVFP" in campaign: nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2016postVFPUL_baseline_Dec11"
+    elif "2017" in campaign:        nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2017UL_baseline_Dec30"
+    elif "2016preVFP"  in campaign: nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2016preVFPUL_baseline_Jan01"
+    elif "2016postVFP" in campaign: nanoAOD_path = "/home/work/phazarik1/work/CondorDump/output/skim_2016postVFPUL_baseline_Jan01"
 else:
     if "2018" in campaign:   nanoAOD_path = "/home/work/alaha1/public/RunII_ULSamples/2018"
     elif "2017" in campaign: nanoAOD_path = "/home/work/alaha1/public/RunII_ULSamples/2017"

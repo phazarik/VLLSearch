@@ -10,18 +10,21 @@
 using namespace std;
 
 //Common headers:
-#include "/home/work/phazarik1/work/VLLSearch/Setup/CustomFunctions.h"
-#include "/home/work/phazarik1/work/VLLSearch/Setup/EventSelection.h"
-#include "/home/work/phazarik1/work/VLLSearch/Setup/ProduceGenCollection.h"
-#include "/home/work/phazarik1/work/VLLSearch/Setup/ProduceRecoCollection.h"
-#include "/home/work/phazarik1/work/VLLSearch/Setup/nlohmann/json_setup.h"
+//#include "/home/work/phazarik1/work/VLLSearch/Setup/CustomFunctions.h"
+//#include "/home/work/phazarik1/work/VLLSearch/Setup/EventSelection.h"
+//#include "/home/work/phazarik1/work/VLLSearch/Setup/ProduceGenCollection.h"
+//#include "/home/work/phazarik1/work/VLLSearch/Setup/ProduceRecoCollection.h"
+//#include "/home/work/phazarik1/work/VLLSearch/Setup/nlohmann/json_setup.h"
 
 //Corrections:
-#include "/home/work/phazarik1/work/VLLSearch/Corrections/calculateCorrections.h"
-#include "/home/work/phazarik1/work/VLLSearch/Corrections/TriggerEfficiency.h"
+//#include "/home/work/phazarik1/work/VLLSearch/Corrections/calculateCorrections.h"
+//#include "/home/work/phazarik1/work/VLLSearch/Corrections/TriggerEfficiency.h"
 
 //Headers used by this particular setup:
-#include "/home/work/phazarik1/work/VLLSearch/AnaScript/TreeMaker/treeMakerHelper.h"
+//#include "/home/work/phazarik1/work/VLLSearch/AnaScript/TreeMaker/treeMakerHelper.h"
+
+#include "/home/work/phazarik1/work/VLLSearch/AnaScript/includeHeaders.h"
+#include "treeMakerHelper.h"
 
 void AnaScript::Begin(TTree * /*tree*/)
 {
