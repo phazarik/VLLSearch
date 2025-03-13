@@ -20,3 +20,6 @@ LocalScripts/input_files/
 !LocalScripts/NNTrainer/*/*.png
 !Corrections/SFfromPOG/*txt
 !Corrections/plots/*/*.png
+!LocalScripts/DimReduction/*/*.pkl
+!LocalScripts/DimReduction/*/*.png
+!LocalScripts/DimReduction/*.png

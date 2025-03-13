@@ -7,20 +7,34 @@ import scipy.sparse as sparse #for numpy.array - pd.dataframe column conversion
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve,auc
 from keras import layers
+from tqdm  import tqdm
 #from keras import Sequential
 #from tensorflow.keras.layers import Dense
 
 #Global parameters:
-jobname = 'tree_2016postVFPUL_baseline_Jan02'
-indir = '../input_files/trees'
-outdir = f'../input_files/trees_modified/tree_2016postVFPUL_baseline_Jan02'
+indir = '../input_files/trees/'
+jobname = 'tree_eeSS_Zwindow_2018UL_Feb27'
+outdir = f'../input_files/trees_modified/tree_eeSS_Zwindow_2018UL_Mar13'
 os.makedirs(outdir, exist_ok=True)
 
+'''
 modeldict = {
-    'qcd-vs-vlld-ele-m100-oct21'    :'nnscore_qcd_vlldele_100',
-    'qcd-vs-vlld-ele-m200-800-oct21':'nnscore_qcd_vlldele_200_800',
-    'qcd-vs-vlld-mu-m100-oct21'     :'nnscore_qcd_vlldmu_100',
-    'qcd-vs-vlld-mu-m200-800-oct21' :'nnscore_qcd_vlldmu_200_800'
+    'qcd-vs-vlld-ele-2016postVFP_UL-feb06': 'nnscore_qcd_vlldele_2016postVFP',
+    'qcd-vs-vlld-ele-2016preVFP_UL-feb06' : 'nnscore_qcd_vlldele_2016preVFP',
+    'qcd-vs-vlld-ele-2017_UL-feb06'       : 'nnscore_qcd_vlldele_2017',
+    'qcd-vs-vlld-ele-2018_UL-feb06'       : 'nnscore_qcd_vlldele_2018',
+    'qcd-vs-vlld-mu-2016postVFP_UL-feb06' : 'nnscore_qcd_vlldmu_2016postVFP',
+    'qcd-vs-vlld-mu-2016preVFP_UL-feb06'  : 'nnscore_qcd_vlldmu_2016preVFP',
+    'qcd-vs-vlld-mu-2017_UL-feb06'        : 'nnscore_qcd_vlldmu_2017',
+    'qcd-vs-vlld-mu-2018_UL-feb06'        : 'nnscore_qcd_vlldmu_2018'
+}
+'''
+modeldict = {
+    'qcd-vs-vlld-comb-2016postVFP_UL-feb07': 'nnscore_qcd_vlld_2016postVFP',
+    'qcd-vs-vlld-comb-2016preVFP_UL-feb07' : 'nnscore_qcd_vlld_2016preVFP',
+    'qcd-vs-vlld-comb-2017_UL-feb07'       : 'nnscore_qcd_vlld_2017',
+    'qcd-vs-vlld-comb-2018_UL-feb07'       : 'nnscore_qcd_vlld_2018',
+    'ttbar-vs-vlld-comb-feb13'             : 'nnscore_ttbar_vlld',
 }
 
 #-------------------------------------------
@@ -29,6 +43,7 @@ modeldict = {
 #-------------------------------------------
 # Define functions:
 #Given a TFile, read its branches into a dataframe.
+'''
 def read_file_into_df(filepath, truth=None):
 
     tfile = uproot.open(filepath)
@@ -40,28 +55,6 @@ def read_file_into_df(filepath, truth=None):
 
     return df
 
-def ApplyMinMax(X, modelname):
-
-    min_filename = f'{modelname}/scaling_parameters_min.txt'
-    max_filename = f'{modelname}/scaling_parameters_max.txt'
-
-    # Load min values from the file
-    minval = np.loadtxt(min_filename)
-    # Load max values from the file
-    maxval = np.loadtxt(max_filename)
-    
-    #print('Min from txt: ', minval)
-    #print('Max from txt: ', maxval)
-    
-    # Calculate the difference
-    diff = maxval - minval
-    normed_X = X.copy()    
-    # Scale the data only for non-constant columns
-    nonconst = np.where(diff != 0)[0]
-    normed_X[:, nonconst] = 2 * ((X[:, nonconst] - minval[nonconst]) / diff[nonconst]) - 1.0
-    
-    return normed_X
-
 def write_df_into_file(df, filepath):
     if df.empty:
         data_dict = {col: np.array([], dtype=df[col].dtype) for col in df.columns}
@@ -70,26 +63,72 @@ def write_df_into_file(df, filepath):
         data_dict = df.to_dict('list')
         
     with uproot.recreate(filepath) as file: file['myEvents'] = data_dict
+'''
 
+def read_file_into_df(filepath, step_size=100000):
+    with uproot.open(filepath) as tfile:
+        if "myEvents" not in tfile:
+            print(f"Warning: 'myEvents' tree not found in {filepath}. Skipping.")
+            return pd.DataFrame()
+
+        ttree = tfile["myEvents"]
+        total_entries = ttree.num_entries
+
+        if total_entries == 0:
+            print(f"Warning: 'myEvents' tree in {filepath} is empty. Skipping.")
+            return pd.DataFrame()
+
+        total_batches = (total_entries + step_size - 1) // step_size
+        dfs = []
+
+        with tqdm(total=total_batches, unit="batch",
+                  bar_format="{l_bar}{bar}| [{elapsed} < {remaining}, {n_fmt}/{total_fmt}]",
+                  leave=True, ncols=100, desc="Reading", colour='green') as pbar:
+            for batch in ttree.iterate(ttree.keys(), step_size=step_size, library="pd"):
+                dfs.append(batch)
+                pbar.update(1)
+
+    return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
+
+def write_df_into_file(df, filepath, step_size=100000):
+    if df.empty:
+        print(f"Warning: Attempting to write empty DataFrame to {filepath}. Skipping.")
+        return
+
+    total_entries = len(df)
+    total_batches = (total_entries + step_size - 1) // step_size
+
+    with tqdm(total=total_batches, unit="batch", 
+              bar_format="{l_bar}{bar}| {percentage:3.0f}% [{elapsed} < {remaining}, {n_fmt}/{total_fmt}]",
+              leave=True, ncols=100, desc="Writing", colour='green') as pbar:
+        
+        with uproot.recreate(filepath) as file:
+            for start in range(0, total_entries, step_size):
+                chunk = df.iloc[start:start + step_size]
+                if start == 0: file["myEvents"] = {col: chunk[col].to_numpy() for col in df.columns}
+                else:          file["myEvents"].extend({col: chunk[col].to_numpy() for col in df.columns})
+                pbar.update(1)
+
+def ApplyMinMax(X, modelname):
+
+    min_filename = f'{modelname}/scaling_parameters_min.txt'
+    max_filename = f'{modelname}/scaling_parameters_max.txt'
+
+    minval = np.loadtxt(min_filename)
+    maxval = np.loadtxt(max_filename)
+    diff = maxval - minval
+    normed_X = X.copy()    
+    # Scale the data only for non-constant columns
+    nonconst = np.where(diff != 0)[0]
+    normed_X[:, nonconst] = 2 * ((X[:, nonconst] - minval[nonconst]) / diff[nonconst]) - 1.0
+    
+    return normed_X
+    
 print('Functions loaded.')
-
-#-----------------------------------------
-# Load models and scaling parameters once
-models = {}
-scaling_params = {}
-for modelname, scorename in modeldict.items():
-    model_filename = f'{modelname}/model_{modelname}.keras' 
-    models[modelname] = tf.keras.models.load_model(model_filename)
-    print(f'Model loaded: {modelname}')
-
-print('Models loaded.')
 
 #----------------------------------------------------------------------------------
 # Evaluation beings here:
 list_of_files = os.listdir(os.path.join(indir, jobname))
-#train_var = ['njet', 'nbjet', 'dilep_mt', 'dilep_dR', 'HTMETllpt', 'STfrac', 'dphi_metdilep', 'dphi_metlep_max', 'dphi_metlep_min']
-#train_var = ['njet', 'dilep_mt', 'dilep_dR', 'dilep_dphi', 'HTMETllpt', 'HT', 'STfrac', 'dphi_metlep0', 'dphi_metdilep', 'dphi_metlep_max', 'dphi_metlep_min']
-# The list of training variables has to match with the trainning part.
 
 print('\nStarting evaluation ... (hold on, this will take a while)\n')
 import time
@@ -99,6 +138,8 @@ list_success = []
 list_failed  = []
 
 for f in list_of_files:
+
+    #if "DY" not in f: continue 
 
     #Step1: Prepare the dataframe
     print(f'\nLoading file: {f}')
@@ -119,7 +160,8 @@ for f in list_of_files:
         #Step 2.1: pick which variables to read, and turn those into a numpy array: 
         train_var = []
 
-        if modelname in ['qcd-vs-vlld-mu-m200-800-oct21', 'qcd-vs-vlld-ele-m200-800-oct21', 'qcd-vs-vlld-mu-m100-oct21', 'qcd-vs-vlld-ele-m100-oct21']:
+        #if modelname in ['qcd-vs-vlld-mu-m200-800-oct21', 'qcd-vs-vlld-ele-m200-800-oct21', 'qcd-vs-vlld-mu-m100-oct21', 'qcd-vs-vlld-ele-m100-oct21']:
+        if 'qcd' in modelname:
             train_var = [
                 'njet',
                 'dilep_dR',
@@ -131,17 +173,41 @@ for f in list_of_files:
                 'dphi_metlep0',
                 'dphi_metdilep'
             ]
-        
-        X= df[train_var].values
-        
-        print(f'Predicting score for model: {modelname}')
-        X_scaled = ApplyMinMax(X, modelname)
-        print(f'X is scaled with min-max values for model: {modelname}')
-            
-        # Predict the scores and add as a new column
-        y = models[modelname].predict(X_scaled)
-        df[scorename] = y
+        elif 'ttbar' in modelname:
+            train_var = [
+                'dilep_pt',
+                'dilep_mt',
+                'dilep_dphi',
+                'dilep_ptratio',
+                'LT',
+                'ST',
+                'STfrac',
+                'dphi_metlep0',
+                'dphi_metlep1',
+                'dphi_metlep_min'
+            ]
+        else: print('Error: Pick correct training variables!')
 
+        model_filename = f'{modelname}/model_{modelname}.keras'
+        model = tf.keras.models.load_model(model_filename)
+        print(f'Model loaded: {modelname}')
+
+        scores = []
+        BATCH_SIZE = 1000000
+        num_batches = (len(df) + BATCH_SIZE - 1) // BATCH_SIZE
+
+        for i, start in enumerate(range(0, len(df), BATCH_SIZE), start=1):
+            print(f'Preparing batch {i}/{num_batches} for evaluation')
+            batch_df = df.iloc[start:start+BATCH_SIZE]
+            X = batch_df[train_var].values.astype(np.float32)
+            X_scaled = ApplyMinMax(X, modelname)
+            y = model.predict(X_scaled, batch_size=BATCH_SIZE)
+            scores.append(y)
+
+        df[scorename] = np.vstack(scores)
+        
+        del model
+        tf.keras.backend.clear_session() 
         #break #model
 
     write_df_into_file(df, os.path.join(outdir, f))

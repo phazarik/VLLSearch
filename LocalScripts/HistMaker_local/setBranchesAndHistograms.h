@@ -14,7 +14,7 @@ extern Double_t dilep_pt, dilep_eta, dilep_phi, dilep_mass, dilep_mt, dilep_deta
 extern Double_t HT, LT, STvis, ST, HTMETllpt, STfrac, metpt, metphi;
 extern Double_t dphi_metlep0, dphi_metlep1, dphi_metdilep, dphi_metlep_max, dphi_metlep_min;
 extern Double_t wt_leptonSF, wt_trig, wt_pileup, wt_bjet, weight;
-extern Double_t nnscore1, nnscore2, nnscore3, nnscore4;
+extern Double_t nnscore1, nnscore2, nnscore3, nnscore4, nnscore5, nnscore6, nnscore7, nnscore8;
 
 void setBranches(TTree *tree)
 {
@@ -63,10 +63,14 @@ void setBranches(TTree *tree)
   tree->SetBranchAddress("wt_pileup", &wt_pileup);
   tree->SetBranchAddress("wt_bjet", &wt_bjet);
   tree->SetBranchAddress("weight", &weight);
-  tree->SetBranchAddress("nnscore_qcd_vlldele_100",     &nnscore1);
-  tree->SetBranchAddress("nnscore_qcd_vlldele_200_800", &nnscore2);
-  tree->SetBranchAddress("nnscore_qcd_vlldmu_100",      &nnscore3);
-  tree->SetBranchAddress("nnscore_qcd_vlldmu_200_800",  &nnscore4);
+  tree->SetBranchAddress("nnscore_qcd_vlldele_2016preVFP",  &nnscore1);
+  tree->SetBranchAddress("nnscore_qcd_vlldele_2016postVFP", &nnscore2);
+  tree->SetBranchAddress("nnscore_qcd_vlldele_2017",        &nnscore3);
+  tree->SetBranchAddress("nnscore_qcd_vlldele_2018",        &nnscore4);
+  tree->SetBranchAddress("nnscore_qcd_vlldmu_2016preVFP",   &nnscore5);
+  tree->SetBranchAddress("nnscore_qcd_vlldmu_2016postVFP",  &nnscore6);
+  tree->SetBranchAddress("nnscore_qcd_vlldmu_2017",         &nnscore7);
+  tree->SetBranchAddress("nnscore_qcd_vlldmu_2018",         &nnscore8);
 }
 
 void SetLastBinAsOverflow(TH1F *hst){

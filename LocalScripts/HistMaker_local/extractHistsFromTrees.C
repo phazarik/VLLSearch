@@ -13,7 +13,7 @@ Double_t lep1_pt, lep1_eta, lep1_phi, lep1_iso, lep1_sip3d, lep1_mt;
 Double_t dilep_pt, dilep_eta, dilep_phi, dilep_mass, dilep_mt, dilep_deta, dilep_dphi, dilep_dR, dilep_ptratio;
 Double_t HT, LT, STvis, ST, HTMETllpt, STfrac, metpt, metphi;
 Double_t dphi_metlep0, dphi_metlep1, dphi_metdilep, dphi_metlep_max, dphi_metlep_min;
-Double_t nnscore1, nnscore2, nnscore3, nnscore4;
+Double_t nnscore1, nnscore2, nnscore3, nnscore4, nnscore5, nnscore6, nnscore7, nnscore8;
 Double_t wt_leptonSF, wt_trig, wt_pileup, wt_bjet, weight;
 
 //External functions:
@@ -51,9 +51,9 @@ map<string, map<string, float>> loadJson(const string &filename) {
 }
 
 void extractHistsFromTrees(
-			   const std::string& jobname  = "sr/tree_2017UL_sr",
-			   const std::string& dump     = "hist_2017UL_sr_Jan07_mm",
-			   const std::string& campaign = "2017_UL",
+			   const std::string& jobname  = "baseline/tree_2018UL_baseline",
+			   const std::string& dump     = "hist_2018UL_baseline_Feb06_mm",
+			   const std::string& campaign = "2018_UL",
 			   const std::string& channel  = "mm",
 			   bool test   = false,
 			   bool dryrun = false)

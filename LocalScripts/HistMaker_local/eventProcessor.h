@@ -19,7 +19,7 @@ extern Double_t dilep_pt, dilep_eta, dilep_phi, dilep_mass, dilep_mt, dilep_deta
 extern Double_t HT, LT, STvis, ST, HTMETllpt, STfrac, metpt, metphi;
 extern Double_t dphi_metlep0, dphi_metlep1, dphi_metdilep, dphi_metlep_max, dphi_metlep_min;
 extern Double_t wt_leptonSF, wt_trig, wt_pileup, wt_bjet, weight;
-extern Double_t nnscore1, nnscore2, nnscore3, nnscore4;
+extern Double_t nnscore1, nnscore2, nnscore3, nnscore4, nnscore5, nnscore6, nnscore7, nnscore8;
 
 struct hists{
   TString name;
@@ -142,17 +142,21 @@ void processTree(
     {"dphi_metdilep", "dphi_metdilep", 100, 0, 4, {}},
     {"dphi_metlep_max", "dphi_metlep_max", 100, 0, 4, {}},
     {"dphi_metlep_min", "dphi_metlep_min", 100, 0, 4, {}},
-    // nnscores:
-    {"nnscore_qcd_vlldele_100",     "nnscore_qcd_vlldele_100",     200, 0, 1, {}},
-    {"nnscore_qcd_vlldele_200_800", "nnscore_qcd_vlldele_200_800", 200, 0, 1, {}},
-    {"nnscore_qcd_vlldmu_100",      "nnscore_ttbar_vlldmu_100",    200, 0, 1, {}},
-    {"nnscore_qcd_vlldmu_200_800",  "nnscore_qcd_vlldmu_200_800",  200, 0, 1, {}},
     // weights:
     {"2LSS_wt_leptonSF", "wt_leptonSF", 200, 0, 2, {}},
     {"2LSS_wt_trig", "wt_trig", 200, 0, 2, {}},
     {"2LSS_wt_pileup", "wt_pileup", 200, 0, 2, {}},
     {"2LSS_wt_bjet", "wt_bjet", 200, 0, 2, {}},
     {"2LSS_wt_evt", "weight", 200, 0, 2, {}},
+    // nnscores:
+    {"nnscore_qcd_vlldele_2016preVFP", "nnscore_qcd_vlldele_2016preVFP",  200, 0, 1, {}},
+    {"nnscore_qcd_vlldele_2016postVFP","nnscore_qcd_vlldele_2016postVFP", 200, 0, 1, {}},
+    {"nnscore_qcd_vlldele_2017",       "nnscore_qcd_vlldele_2017",        200, 0, 1, {}},
+    {"nnscore_qcd_vlldele_2018",       "nnscore_qcd_vlldele_2018",        200, 0, 1, {}},
+    {"nnscore_qcd_vlldmu_2016preVFP",  "nnscore_qcd_vlldmu_2016preVFP",   200, 0, 1, {}},
+    {"nnscore_qcd_vlldmu_2016postVFP", "nnscore_qcd_vlldmu_2016postVFP",  200, 0, 1, {}},
+    {"nnscore_qcd_vlldmu_2017",        "nnscore_qcd_vlldmu_2017",         200, 0, 1, {}},
+    {"nnscore_qcd_vlldmu_2018",        "nnscore_qcd_vlldmu_2018",         200, 0, 1, {}},
   };
     
   //Booking histograms:
@@ -191,7 +195,7 @@ void processTree(
 
     Double_t wt = 1.0;
 
-    if((string)campaign == "2016preVFP_UL" || (string)campaign == "2016postVFP_UL") wt_pileup = 1.0;
+    //if((string)campaign == "2016preVFP_UL" || (string)campaign == "2016postVFP_UL") wt_pileup = 1.0;
     wt = wt*wt_leptonSF*wt_trig*wt_pileup; //Object corrections
     //wt = wt*wt_bjet;             //Adding b-tagging corrections
 
@@ -204,13 +208,13 @@ void processTree(
     // 1) Global QCD scaling:
     bool correct_QCD = (baseFilename.find("QCD") != std::string::npos) && (baseFilename.find("Enriched") != std::string::npos);
     Double_t scale_qcd = 1.0;
-    if(correct_QCD) scale_qcd = (Double_t)getScaleFactorGlobal(campaign, channelval, sf_qcd);
+    //if(correct_QCD) scale_qcd = (Double_t)getScaleFactorGlobal(campaign, channelval, sf_qcd);
     wt = wt * scale_qcd;
     
     // 2) TTbar HT binned scaling:
     bool correct_ttbar = baseFilename.find("TTBar") != std::string::npos;
     Double_t scale_ttbar = 1.0;
-    if(correct_ttbar)  scale_ttbar = (Double_t)getScaleFactorInBins(campaign, channelval, HT, sf_ttbar);
+    //if(correct_ttbar)  scale_ttbar = (Double_t)getScaleFactorInBins(campaign, channelval, HT, sf_ttbar);
     wt = wt * scale_ttbar;
     
     //--------------------------------
@@ -265,17 +269,21 @@ void processTree(
       hst_collection[36]->Fill(dphi_metdilep, wt);
       hst_collection[37]->Fill(dphi_metlep_max, wt);
       hst_collection[38]->Fill(dphi_metlep_min, wt);
-      // nnscores:
-      hst_collection[39]->Fill(nnscore1, wt);
-      hst_collection[40]->Fill(nnscore2, wt);
-      hst_collection[41]->Fill(nnscore3, wt);
-      hst_collection[42]->Fill(nnscore4, wt);
       // weights:
-      hst_collection[43]->Fill(wt_leptonSF, 1.0);
-      hst_collection[44]->Fill(wt_trig, 1.0);
-      hst_collection[45]->Fill(wt_pileup, 1.0);
-      hst_collection[46]->Fill(wt_bjet, 1.0);
-      hst_collection[47]->Fill(wt, 1.0);
+      hst_collection[39]->Fill(wt_leptonSF, 1.0);
+      hst_collection[40]->Fill(wt_trig, 1.0);
+      hst_collection[41]->Fill(wt_pileup, 1.0);
+      hst_collection[42]->Fill(wt_bjet, 1.0);
+      hst_collection[43]->Fill(wt, 1.0);
+      // nnscores:
+      hst_collection[44]->Fill(nnscore1, wt);
+      hst_collection[45]->Fill(nnscore2, wt);
+      hst_collection[46]->Fill(nnscore3, wt);
+      hst_collection[47]->Fill(nnscore4, wt);
+      hst_collection[48]->Fill(nnscore5, wt);
+      hst_collection[49]->Fill(nnscore6, wt);
+      hst_collection[50]->Fill(nnscore7, wt);
+      hst_collection[51]->Fill(nnscore8, wt);
     }
   }
   // Event loop ends
