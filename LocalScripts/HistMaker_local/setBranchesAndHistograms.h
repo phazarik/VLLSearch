@@ -6,7 +6,7 @@
 #include <TTree.h>
 #include <TH1F.h>
 using namespace std;
-
+/*
 extern Long64_t channel, trigger, nlep, njet, nbjet;
 extern Double_t lep0_pt, lep0_eta, lep0_phi, lep0_iso, lep0_sip3d, lep0_mt;
 extern Double_t lep1_pt, lep1_eta, lep1_phi, lep1_iso, lep1_sip3d, lep1_mt;
@@ -14,7 +14,15 @@ extern Double_t dilep_pt, dilep_eta, dilep_phi, dilep_mass, dilep_mt, dilep_deta
 extern Double_t HT, LT, STvis, ST, HTMETllpt, STfrac, metpt, metphi;
 extern Double_t dphi_metlep0, dphi_metlep1, dphi_metdilep, dphi_metlep_max, dphi_metlep_min;
 extern Double_t wt_leptonSF, wt_trig, wt_pileup, wt_bjet, weight;
-extern Double_t nnscore1, nnscore2, nnscore3, nnscore4, nnscore5, nnscore6, nnscore7, nnscore8;
+extern Double_t nnscore1, nnscore2, nnscore3, nnscore4, nnscore5;*/
+extern Int_t channel, trigger, nlep, njet, nbjet;
+extern Float_t lep0_pt, lep0_eta, lep0_phi, lep0_iso, lep0_sip3d, lep0_mt;
+extern Float_t lep1_pt, lep1_eta, lep1_phi, lep1_iso, lep1_sip3d, lep1_mt;
+extern Float_t dilep_pt, dilep_eta, dilep_phi, dilep_mass, dilep_mt, dilep_deta, dilep_dphi, dilep_dR, dilep_ptratio;
+extern Float_t HT, LT, STvis, ST, HTMETllpt, STfrac, metpt, metphi;
+extern Float_t dphi_metlep0, dphi_metlep1, dphi_metdilep, dphi_metlep_max, dphi_metlep_min;
+extern Float_t nnscore1, nnscore2, nnscore3, nnscore4, nnscore5;
+extern Double_t wt_leptonSF, wt_trig, wt_pileup, wt_bjet, weight;
 
 void setBranches(TTree *tree)
 {
@@ -48,7 +56,6 @@ void setBranches(TTree *tree)
   tree->SetBranchAddress("LT", &LT);
   tree->SetBranchAddress("STvis", &STvis);
   tree->SetBranchAddress("ST", &ST);
-  tree->SetBranchAddress("HT", &HT);
   tree->SetBranchAddress("HTMETllpt", &HTMETllpt);
   tree->SetBranchAddress("STfrac", &STfrac);
   tree->SetBranchAddress("metpt", &metpt);
@@ -63,17 +70,14 @@ void setBranches(TTree *tree)
   tree->SetBranchAddress("wt_pileup", &wt_pileup);
   tree->SetBranchAddress("wt_bjet", &wt_bjet);
   tree->SetBranchAddress("weight", &weight);
-  tree->SetBranchAddress("nnscore_qcd_vlldele_2016preVFP",  &nnscore1);
-  tree->SetBranchAddress("nnscore_qcd_vlldele_2016postVFP", &nnscore2);
-  tree->SetBranchAddress("nnscore_qcd_vlldele_2017",        &nnscore3);
-  tree->SetBranchAddress("nnscore_qcd_vlldele_2018",        &nnscore4);
-  tree->SetBranchAddress("nnscore_qcd_vlldmu_2016preVFP",   &nnscore5);
-  tree->SetBranchAddress("nnscore_qcd_vlldmu_2016postVFP",  &nnscore6);
-  tree->SetBranchAddress("nnscore_qcd_vlldmu_2017",         &nnscore7);
-  tree->SetBranchAddress("nnscore_qcd_vlldmu_2018",         &nnscore8);
+  tree->SetBranchAddress("nnscore_qcd_vlld_2016preVFP",  &nnscore1);
+  tree->SetBranchAddress("nnscore_qcd_vlld_2016postVFP", &nnscore2);
+  tree->SetBranchAddress("nnscore_qcd_vlld_2017",        &nnscore3);
+  tree->SetBranchAddress("nnscore_qcd_vlld_2018",        &nnscore4);
+  tree->SetBranchAddress("nnscore_ttbar_vlld",           &nnscore5);
 }
 
-void SetLastBinAsOverflow(TH1F *hst){
+void SetLastBinAsOverflow(TH1D *hst){
   
   //Handle overlow:
   int lastBin = hst->GetNbinsX();
